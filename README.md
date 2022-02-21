@@ -1,14 +1,24 @@
 # myYogaMate
 It is a Real time embedded progarmming project called "My Yoga Mate" which will detect human posture doing yoga and rectify it.
 
-Git Command Line
+Git Command Line to run in command prompt
 echo "myYogaMate" >> README.md <br/>
 git init <br/>
 git add README.md <br/>
 git commit -m "first commit" <br/>
 git branch -M main <br/>
+vim filename <br/>
+git add filename <br/>
+git commit -m "commit comment" <br/>
 git remote add origin git@github.com:SunitaAcharya/myYogaMate.git   <br/>
 git push -u origin main   <br/>
+git push --set-upstream origin master <br/>
+git pull <br/>
+cat filename <br/>
+git checkout master <br/>
+git branch <br/>
+git --help <br/>
+
 
 
 <br/>
