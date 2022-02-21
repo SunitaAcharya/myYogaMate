@@ -1,7 +1,7 @@
 # myYogaMate
 It is a Real time embedded progarmming project called "My Yoga Mate" which will detect human posture doing yoga and rectify it.
 
-<b>Git Command Line to run in command prompt</b>
+<b>Git Command Line to run in command prompt</b> <br/>
 echo "myYogaMate" >> README.md <br/>
 git init <br/>
 git add README.md <br/>
