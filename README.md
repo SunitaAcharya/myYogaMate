@@ -13,7 +13,7 @@ git push -u origin main   <br/>
 
 <br/>
 <br/>
-<b>How to install Linux on Windows 10 for Dual SetUP: </b><br/>
+<b>To install Linux on Windows 10 for Dual SetUP: </b><br/>
 <br/>
 Step 1: Dowonload and Install Virtual Box from https://www.virtualbox.org/ <br/>
 Step 2: Download Ubuntu 20.04.3 from https://ubuntu.com/download/desktop <br/>
