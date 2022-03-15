@@ -1,33 +1,40 @@
 # myYogaMate
-It is a Real time embedded progarmming project called "My Yoga Mate" which will detect human posture doing yoga and rectify it.
+It is a Real time embedded progarmming project called "My Yoga Mate" which will detect human posture doing yoga and show them the correct pose from the stored image/video and show the user to correct yoga pose. <br/>
+This project is built in C++ code using WebCam for detect the human pose from user and image. We have use openCV and tensorflow to find human keypoints and pose estimation. <br/>
 
+<b>Some useful commands to use GIT </b>
+<br/>
+<br/>
 <b>Git Command Line to run in command prompt</b> <br/>
 echo "myYogaMate" >> README.md <br/>
 git init <br/>
 git add README.md <br/>
-git commit -m "first commit" <br/>
 git branch -M main <br/>
-vim filename <br/>
-git add filename <br/>
-git commit -m "commit comment" <br/>
 git remote add origin git@github.com:SunitaAcharya/myYogaMate.git   <br/>
-git push -u origin main   <br/>
-git push --set-upstream origin master <br/>
-git pull <br/>
 cat filename <br/>
 git checkout master <br/>
 git branch <br/>
+<b>To add new file from local system to Git</b>
+<br/>
+vim filename <br/>
+git add filename <br/>
+git commit -m "commit comment" <br/>
+git push -u origin main   <br/>
+git push --set-upstream origin master <br/>
+<b> To pull code from git to local system </b>
+<br/>
+git pull <br/>
+<b>For help</b>
+<br/>
 git --help <br/>
 
 
 
 <br/>
 <br/>
-<b>To install Linux on Windows 10 for Dual SetUP: </b><br/>
+<b> To install Ubuntu on Windows 10 for Dual SetUP: </b><br/>
 <br/>
-Step 1: Dowonload and Install Virtual Box from https://www.virtualbox.org/ <br/>
-Step 2: Download Ubuntu 20.04.3 from https://ubuntu.com/download/desktop <br/>
-Step 3: Follow the rest of the steps from https://www.youtube.com/watch?v=mxUQT8bcoVQ <br/>
+https://linuxconfig.org/how-to-install-ubuntu-20-04-alongside-windows-10-dual-boot
 
 
 
