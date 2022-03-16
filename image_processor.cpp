@@ -35,7 +35,7 @@
 /*** Global variable ***/
 std::unique_ptr<PoseEngine> s_engine;
 int BOOL[8]={0,0,0,0,0,0,0,0};
-
+double angle0[8]={0,0,0,0,0,0,0,0};//Angle of cam
 /*** Function ***/
 static void DrawFps(cv::Mat& mat, double time_inference, cv::Point pos, double font_scale, int32_t thickness, cv::Scalar color_front, cv::Scalar color_back, bool is_text_on_rect = true)
 {
@@ -134,7 +134,7 @@ int32_t ImageProcessor::Process(cv::Mat& mat, ImageProcessor::Result& result)
         return -1;
     }
     double angle[8]; //Angle of user
-	double angle0[8]={120,160,80,110,50,160,175,175};//Angle of cam
+	double angle0[8];//Angle of cam
     int Learner[12][2]; //joint of uesr
     //int BOOL[8]={0,0,0,0,0,0,0,0}; 
     PoseEngine::Result pose_result;
@@ -214,14 +214,20 @@ int32_t ImageProcessor::Process(cv::Mat& mat, ImageProcessor::Result& result)
                 int32_t y1 = keypoint[jointLine.second].second;
                 cv::line(mat, cv::Point(x0, y0), cv::Point(x1, y1), CommonHelper::CreateCvColor(0, 255, 0), 2);
             }
-            for (int k = 0; k <8; k++)//mark wrong joint lines
+            
+            if (Thread_num==1)
             {
-                if(BOOL[k]!=0)
+                for (int k = 0; k <8; k++)//mark wrong joint lines
                 {
+                    if(BOOL[k]!=0)
+                    {
                     cv::line(mat, cv::Point(Learner[k+2][0], Learner[k+2][1]), cv::Point(Learner[k][0], Learner[k][1]), CommonHelper::CreateCvColor(0, 0, 255), 2);
                     cv::line(mat, cv::Point(Learner[k+2][0], Learner[k+2][1]), cv::Point(Learner[k+4][0], Learner[k+4][1]), CommonHelper::CreateCvColor(0, 0, 255), 2);
+                    }
                 }
             }
+            
+            
         }
 
         /* Display joints */
@@ -230,13 +236,18 @@ int32_t ImageProcessor::Process(cv::Mat& mat, ImageProcessor::Result& result)
                 const auto& p = keypoint[j];
                 cv::circle(mat, cv::Point(p.first, p.second), 5, CommonHelper::CreateCvColor(0, 255, 0),2);
             }
-            for(int k=0; k<8; k++)//mark wrong joints
+            if (Thread_num==1)
             {
-                if(BOOL[k] !=0)
+                for(int k=0; k<8; k++)//mark wrong joints
                 {
+                    if(BOOL[k] !=0)
+                    {
                     cv::circle(mat, cv::Point(Learner[k+2][0], Learner[k+2][1]), 5, CommonHelper::CreateCvColor(0, 0, 255),2);
+                    }
                 }
             }
+            
+            
         }
     }
 
@@ -247,19 +258,5 @@ int32_t ImageProcessor::Process(cv::Mat& mat, ImageProcessor::Result& result)
     result.time_inference = pose_result.time_inference;
     result.time_post_process = pose_result.time_post_process;
     
-    /*if((BOOL[0]==0) & (BOOL[1]==0) & (BOOL[2]==0) & (BOOL[3]==0) & (BOOL[4]==0) & (BOOL[5]==0) & (BOOL[6]==0) & (BOOL[7]==0))
-    {    
-        
-        int n=0;
-        printf("Time: ");
-        while (n<10)
-        {
-            printf("%d", n+1);
-            sleep(1);
-            n++;
-        }
-    
-    }   
-    */
     return 0;
 }
