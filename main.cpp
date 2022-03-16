@@ -22,11 +22,17 @@ using namespace std;
 mutex mtx;
 
 int Thread_num = 0;
+int BOOL[8]={0,0,0,0,0,0,0,0};
+double angle0[8]={0,0,0,0,0,0,0,0};
+
 
 int32_t cam_process (string Webcam_id)
 {
     Thread_num = 1;
     std::string input_name = Webcam_id;
+    //double angle0[8]={2,2,0,0,0,0,0,0};
+
+
 
     cv::VideoCapture cap;   
      if (!CommonHelper::FindSourceImage(input_name, cap)) {
@@ -54,13 +60,16 @@ int32_t cam_process (string Webcam_id)
 
         ImageProcessor::Result result;
         ImageProcessor::Process(image, result);
-
+        flip(image, image, 1);
         if (writer.isOpened()) writer.write(image);
         cv::imshow("Webcam", image);
 
         if (cap.isOpened()) {
             if (CommonHelper::InputKeyCommand(cap)) break;
         };
+
+        //double angle0[8]={2,2,0,0,0,0,0,0};
+        //printf("Angle ===== %f, \n", angle0[1]);
 
          printf("=== Finished %d frame ===\n\n", frame_cnt);
    
@@ -77,6 +86,7 @@ int32_t cam_process (string Webcam_id)
 int32_t img_process (string Source_path)
 {
     mtx.lock();
+
     Thread_num = 2;
     std::string input_name = Source_path;
 
@@ -105,6 +115,9 @@ int32_t img_process (string Source_path)
       
         if (writer.isOpened()) writer.write(image);
         cv::imshow("Image show", image);
+
+    //double angle0[8]={2,2,0,0,0,0,0,0};
+    //printf("Angle ===== %f,\n", angle0[1]);
 
     ImageProcessor::Finalize();
     if (writer.isOpened()) writer.release();
