@@ -1,5 +1,4 @@
-/*** Include ***/
-/* for general */
+
 #include <cstdint>
 #include <cstdlib>
 #include <string>
@@ -22,10 +21,11 @@ using namespace std;
 #define LOOP_NUM_FOR_TIME_MEASUREMENT 10
 mutex mtx;
 
-
+int Thread_num = 0;
 
 int32_t cam_process (string Webcam_id)
 {
+    Thread_num = 1;
     std::string input_name = Webcam_id;
 
     cv::VideoCapture cap;   
@@ -77,6 +77,7 @@ int32_t cam_process (string Webcam_id)
 int32_t img_process (string Source_path)
 {
     mtx.lock();
+    Thread_num = 2;
     std::string input_name = Source_path;
 
     cv::VideoCapture cap;   
@@ -109,7 +110,7 @@ int32_t img_process (string Source_path)
     if (writer.isOpened()) writer.release();
     cv::waitKey(-1);
     
-    
+    Thread_num = 0;
     return 0;
     mtx.unlock();
 }
