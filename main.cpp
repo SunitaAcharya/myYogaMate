@@ -28,12 +28,13 @@ double angle0[8]={0,0,0,0,0,0,0,0};
 
 int32_t cam_process (string Webcam_id)
 {
+    mtx.lock();
     Thread_num = 1;
     std::string input_name = Webcam_id;
     //double angle0[8]={2,2,0,0,0,0,0,0};
 
 
-
+    
     cv::VideoCapture cap;   
      if (!CommonHelper::FindSourceImage(input_name, cap)) {
          return -1;
@@ -58,9 +59,14 @@ int32_t cam_process (string Webcam_id)
         }
         if (image.empty()) break;
 
+        flip(image, image, 1);
+        cv::resize(image, image, cv::Size(), 2.5, 2.5);
+
         ImageProcessor::Result result;
         ImageProcessor::Process(image, result);
-        flip(image, image, 1);
+
+
+
         if (writer.isOpened()) writer.write(image);
         cv::imshow("Webcam", image);
 
@@ -71,15 +77,17 @@ int32_t cam_process (string Webcam_id)
         //double angle0[8]={2,2,0,0,0,0,0,0};
         //printf("Angle ===== %f, \n", angle0[1]);
 
-         printf("=== Finished %d frame ===\n\n", frame_cnt);
+        // printf("=== Finished %d frame ===\n\n", frame_cnt);
    
     }
 
     ImageProcessor::Finalize();
     if (writer.isOpened()) writer.release();
+    
     cv::waitKey(-1);
-
+    mtx.unlock();
     return 0;
+    
 
 }
 
@@ -110,8 +118,13 @@ int32_t img_process (string Source_path)
             image = cv::imread(input_name);
         }
 
+        flip(image, image, 1);
+        cv::resize(image, image, cv::Size(), 2.5, 2.5);
+
         ImageProcessor::Result result;
         ImageProcessor::Process(image, result);
+
+        
       
         if (writer.isOpened()) writer.write(image);
         cv::imshow("Image show", image);
@@ -121,11 +134,12 @@ int32_t img_process (string Source_path)
 
     ImageProcessor::Finalize();
     if (writer.isOpened()) writer.release();
-    cv::waitKey(-1);
+    //cv::waitKey(-1);
     
     Thread_num = 0;
+    mtx.unlock(); // before return 0;
     return 0;
-    mtx.unlock();
+    
 }
 
 
@@ -133,16 +147,16 @@ int32_t img_process (string Source_path)
 int32_t main(int argc, char* argv[])
 {
     string cam_path = "0";
-    string img_path = "/home/yuan/Downloads/test3.jpg";
+    string img_path = "/home/yuan/Downloads/test2.jpg";
 
 
     thread th_img(img_process, img_path);
     th_img.join();
-    //thread th_cam(cam_process, cam_path);
-    // thread th_cam(cam_process, cam_path);
-    // th_cam.join();
-    cam_process(cam_path);
-   
+
+
+    thread th_cam(cam_process,cam_path);
+    th_cam.join();
+    
     return 0;
 
 }
