@@ -1,0 +1,48 @@
+set(mnn_use_vulkan OFF)
+if(DEFINED ANDROID_ABI)     # Always tries to use Vulkan on Android
+    set(mnn_use_vulkan ON)
+endif()
+if(mnn_use_vulkan)
+    set(mnn_suffix_vulkan "-vulkan")
+else()
+    set(mnn_suffix_vulkan "")
+endif()
+
+if(DEFINED ANDROID_ABI)
+    set(mnn_DIR ${CMAKE_CURRENT_LIST_DIR}/../mnn_prebuilt/android${mnn_suffix_vulkan}/${ANDROID_ABI})
+elseif(MSVC_VERSION)
+    set(mnn_DIR ${CMAKE_CURRENT_LIST_DIR}/../mnn_prebuilt/windows-vs2019${mnn_suffix_vulkan})
+    file(COPY ${mnn_DIR}/lib/MNN.dll DESTINATION ${CMAKE_BINARY_DIR})
+    file(COPY ${mnn_DIR}/lib/debug/MNN.dll DESTINATION ${CMAKE_BINARY_DIR}/Debug)
+else()
+    if(${BUILD_SYSTEM} STREQUAL "armv7")
+        set(mnn_DIR ${CMAKE_CURRENT_LIST_DIR}/../mnn_prebuilt/armv7${mnn_suffix_vulkan})
+    elseif(${BUILD_SYSTEM} STREQUAL "aarch64")
+        set(mnn_DIR ${CMAKE_CURRENT_LIST_DIR}/../mnn_prebuilt/aarch64${mnn_suffix_vulkan})
+    else()
+        set(mnn_DIR ${CMAKE_CURRENT_LIST_DIR}/../mnn_prebuilt/ubuntu${mnn_suffix_vulkan})
+    endif()
+endif()
+
+if(MSVC_VERSION)
+    set(MNN_LIB
+        $<$<CONFIG:Debug>:${mnn_DIR}/lib/debug/MNN.lib>
+        $<$<CONFIG:RelWithDebInfo>:${mnn_DIR}/lib/MNN.lib>
+        $<$<CONFIG:Release>:${mnn_DIR}/lib/MNN.lib>
+        $<$<CONFIG:MinSizeRel>:${mnn_DIR}/lib/MNN.lib>
+    )
+    # set_target_properties(mnn PROPERTIES IMPORTED_LOCATION ${mnn_DIR}/lib/MNN.lib)
+else()
+    add_library(mnn SHARED IMPORTED GLOBAL)
+    set_target_properties(mnn PROPERTIES IMPORTED_LOCATION ${mnn_DIR}/lib/libMNN.so)
+    if(mnn_use_vulkan)
+        find_package(Vulkan REQUIRED)
+        message(STATUS "Vulkan Include = ${Vulkan_INCLUDE_DIR} , Vulkan Lib = ${Vulkan_LIBRARY}")
+        add_library(mnn_vulkan SHARED IMPORTED GLOBAL)
+        set_target_properties(mnn_vulkan PROPERTIES IMPORTED_LOCATION ${mnn_DIR}/lib/libMNN_Vulkan.so)
+        set(MNN_LIB mnn mnn_vulkan ${Vulkan_LIBRARY})
+    else()
+        set(MNN_LIB mnn)
+    endif()
+endif()
+set(MNN_INC ${mnn_DIR}/include)
