@@ -43,3 +43,25 @@ void image_helper::source_check(const std::string& input_name,cv::VideoCapture& 
     }
     //return 0;
 }
+
+bool image_helper::key_check(cv::VideoCapture& cap)
+{
+    bool ret_to_quit = false;
+    static bool is_pause = false;
+    bool is_process_one_frame = false;
+    int32_t key=cv::waitKey(1)&0xff;
+
+    do
+    {
+        //int32_t key=cv::waitKey(1)&0xff;
+        if(key==int('q'))
+        {
+            cap.release();
+            ret_to_quit = true;
+            break;
+        }
+         
+    }while(is_pause && !is_process_one_frame);
+    
+    return ret_to_quit;
+}
