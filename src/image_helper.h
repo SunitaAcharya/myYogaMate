@@ -1,26 +1,30 @@
 //#pragma once
 #include <iostream>
 #include <string>
-
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui.hpp>
 
 class image_helper
 {
+protected:
+
+
 private:
-    
-    int _a;
-    int _b;
 
-    
+    int cam_id = -1;
+
+
 public:
-image_helper(int a,int b)
-{
-    this ->_a = a;
-    this ->_b = b;
-}
-    void source_check();
-    void key_check();
-    void cv_set(); // temporarily
+    image_helper() 
+    {
 
+    }
 
+    void source_check(const std::string& input_name,cv::VideoCapture& cap);
+
+    ~image_helper()
+    {
+
+    }
 
 };
