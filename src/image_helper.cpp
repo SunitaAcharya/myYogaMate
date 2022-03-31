@@ -65,3 +65,29 @@ bool image_helper::key_check(cv::VideoCapture& cap)
     
     return ret_to_quit;
 }
+
+std::string image_helper::getimgname()
+{  
+    int key;
+    std::cout<<"image_input_name "<<std::endl;
+    std::cin>>key;
+
+    if (key==1)
+    {
+        image_input_name = DEFAULT_IMAGE_PATH "yogapose1.jpg";
+    }
+    else if (key==2)
+    {
+        image_input_name = DEFAULT_IMAGE_PATH "yogapose2.jpg";
+    }
+    else if (key==3)
+    {
+        image_input_name = DEFAULT_IMAGE_PATH "yogapose3.jpg";
+    }
+    else if (key==4)
+    {
+        image_input_name = DEFAULT_IMAGE_PATH "yogapose.jpg";
+    }
+
+    return image_input_name;
+}
