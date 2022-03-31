@@ -22,6 +22,7 @@ public:
     }
 
     void source_check(const std::string& input_name,cv::VideoCapture& cap);
+    bool key_check(cv::VideoCapture& cap);
 
     ~image_helper()
     {
