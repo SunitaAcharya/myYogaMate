@@ -11,6 +11,7 @@ protected:
 
 private:
 
+    cv::Mat img;
     int cam_id = -1;
 
 
