@@ -14,16 +14,28 @@ git remote add origin git@github.com:SunitaAcharya/myYogaMate.git   <br/>
 cat filename <br/>
 git checkout master <br/>
 git branch <br/>
+<b>To checkout development repository then </b> <br/>
+git checkout development <br/>
+<b>To change it back to main repository again change oit back to </b><br/>
+git checkout main <br/>
 <b>To add new file from local system to Git</b>
 <br/>
 vim filename <br/>
 git add filename <br/>
+<b>To add all the files at once </b><br/>
+git add * 
+
+To commit files <br/>
 git commit -m "commit comment" <br/>
+
 git push -u origin main   <br/>
 git push --set-upstream origin master <br/>
+After setting up the respository , this command can be used to push the code <br/>
+git push <br/>
 <b> To pull code from git to local system </b>
 <br/>
 git pull <br/>
+
 <b>For help</b>
 <br/>
 git --help <br/>
