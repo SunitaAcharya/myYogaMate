@@ -13,6 +13,14 @@ public:
     virtual int source_check(const std::string& input_name,cv::VideoCapture& cap)=0;
 };
 
+class KeyInterface 
+{
+public:
+    virtual ~KeyInterface() {}
+    virtual bool key_check(cv::VideoCapture& cap)=0;
+    
+};
+
 /*This class is about checking the image source*/
 class image_check : public ImageSourceInterface
 {
@@ -26,3 +34,18 @@ public:
     virtual int source_check(const std::string& input_name,cv::VideoCapture& cap);
 
 };
+
+/*This class is about image change processes */
+class key : public KeyInterface
+{
+private:
+
+public:
+    key() {}
+    ~key() {}
+    static std::string image_input_name;
+    virtual bool key_check(cv::VideoCapture& cap);
+    
+
+};
+
