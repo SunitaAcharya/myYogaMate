@@ -50,7 +50,7 @@ git pull <br/>
 git --help <br/>
 <br/>
 
-### Referred Links
+### Referrence Links
 <br/>
 To install Ubuntu on Windows 10 for Dual SetUP:https://linuxconfig.org/how-to-install-ubuntu-20-04-alongside-windows-10-dual-boot
 <br/>
@@ -68,4 +68,5 @@ Object Oriented Programming  :
 https://www.digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design <br/>
 C++ memory management
 https://www.programiz.com/cpp-programming/memory-management <br/>
+https://www.mygreatlearning.com/blog/readme-file/ </br>
 
