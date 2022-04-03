@@ -57,3 +57,19 @@ int32_t ImageProcessor_Finalize::Finalize()
     return 0;
 }
 
+int32_t ImageProcessor_Command::Command(int32_t cmd)
+{
+    if (!s_engine) 
+    {
+        std::cout<<"Not initialized\n"<<std::endl;
+        return -1;
+    }
+
+    switch (cmd) 
+    {
+    case 0:
+    default:
+        std::cout<<"command "<<cmd<<" is not supported\n"<<std::endl;
+        return -1;
+    }
+}
