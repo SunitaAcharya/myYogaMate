@@ -42,3 +42,50 @@ int image_check::source_check(const std::string& input_name,cv::VideoCapture& ca
     }
     return 0;
 }
+
+bool key::key_check(cv::VideoCapture& cap)
+{
+    int32_t key=cv::waitKey(1)&0xff;
+    bool ret_to_quit = false;
+        switch (key) 
+        {
+        case 'q':
+            cap.release();
+            ret_to_quit = true;
+            break;
+
+        case '1':
+            cap.release();
+            image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose1.jpg";
+            ret_to_quit = false;
+            break;
+        
+        case '2':
+            cap.release();
+            image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose2.jpg";
+            ret_to_quit = false;
+            break;
+        
+        case '3':
+            cap.release();
+            image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose3.jpg";
+            ret_to_quit = false;
+            break;
+        
+        case '4':
+            cap.release();
+            image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose4.jpg";
+            ret_to_quit = false;
+            break;
+        
+        case '5':
+            cap.release();
+            image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose5.jpg";
+            ret_to_quit = false;
+            break;
+        }
+    
+    return ret_to_quit;
+}
+
+
