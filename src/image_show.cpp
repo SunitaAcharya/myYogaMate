@@ -144,3 +144,60 @@ int32_t image_show::img_process (std::string Source_path)
     return 0;   
 }
 
+/***** img_process function aims to process images from picture *****/
+int32_t image_show::img_process (std::string Source_path)
+{
+    mtx.lock(); // lock
+    Thread_num = 2; // 2 is webcam thread
+
+    /***** change image source *****/
+    key img;
+    if (m_input_name_img.empty())
+    {
+        m_input_name_img = Source_path;
+    }
+    else m_input_name_img = img.get_img_name();
+   
+    /***** create image instance, check image format *****/
+    cv::VideoCapture cap;
+    image_check source_check_img;
+    source_check_img.source_check(m_input_name_img,cap);
+
+    /***** create writer *****/
+    cv::VideoWriter writer;
+    ImageProcessor_Initialize::InputParam input_param = { WORK_DIR, 4 };
+    if (ImageProcessor_Initialize::Initialize(input_param) != 0) 
+    {
+        std::cout<< "Initialization Error" << std::endl;
+        return -1;
+    }
+
+    /***** add lines in images *****/
+    cv::Mat image;
+    if (cap.isOpened()) 
+    {
+        cap.read(image);
+    } 
+    else 
+    {
+        image = cv::imread(m_input_name_img);
+    }
+    ImageProcessor_Process::Result result;
+    ImageProcessor_Process::Process(image, result);
+
+    /***** set image cv parameters, resize and flip *****/
+    image_helper img_cv_set;
+    img_cv_set.cv_setparam(image, 2, 1, 0);
+        
+    /***** show images *****/
+    if (writer.isOpened()) writer.write(image);
+    cv::imshow("Image show", image);
+
+    /***** finalize image process *****/
+    ImageProcessor_Finalize::Finalize();
+    if (writer.isOpened()) writer.release();
+    Thread_num = 0; 
+    mtx.unlock(); // before return 0;
+    return 0;   
+}
+
