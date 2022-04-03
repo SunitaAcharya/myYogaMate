@@ -23,9 +23,8 @@
 std::unique_ptr<PoseEngine> s_engine;
 extern int Thread_num;
 extern double angle0[8];
-    double angle[8];
-    //double angle0[8];
-    int Learner[12][2]; 
+double angle[8];
+int Learner[12][2]; 
 
 int32_t ImageProcessor_Initialize::Initialize(const ImageProcessor_Initialize::InputParam& input_param)
 {
