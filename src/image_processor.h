@@ -32,5 +32,10 @@ class ImageProcessor_Finalize
     static int32_t Finalize(void);
 };
 
+class ImageProcessor_Command
+{
+    public:
+    static int32_t Command(int32_t cmd);
+};
 
 #endif
