@@ -1,5 +1,5 @@
 # myYogaMate
-It is a Real time embedded progarmming project called "My Yoga Mate" which will detect human posture doing yoga and show them the correct pose from the stored image/video and show the user to correct yoga pose. <br/>
+It is a Real time embedded progarmming project called "My Yoga Mate" which will detect human posture doing yoga and compare it with the stored image/video and show the user to correct yoga pose. <br/>
 This project is built in C++ code using WebCam for detect the human pose from user and image. We have use openCV and tensorflow to find human keypoints and pose estimation. <br/>
 
 <br/>
@@ -7,6 +7,19 @@ This project is built in C++ code using WebCam for detect the human pose from us
 <img src="https://github.com/SunitaAcharya/myYogaMate/blob/main/logo.png" width="400" height="350">
   </p>
 <br/>
+
+<h2 id="status">Status</h2>
+<p><a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License" /></a>
+<img src="https://img.shields.io/github/stars/SunitaAcharya/myYogaMate.svg?style=flat&amp;label=Star&amp;maxAge=86400" alt="Stars" />
+<a href="https://github.com/SunitaAcharya/myYogaMate/issues"><img src="https://img.shields.io/github/issues-raw/SunitaAcharya/myYogaMate.svg" alt="GitHub open issues" /></a> 
+<a href="https://github.com/SunitaAcharya/myYogaMate/pulls"><img src="https://img.shields.io/github/issues-pr-raw/SunitaAcharya/myYogaMate.svg" alt="GitHub open pull requests" /></a> <img src="https://img.shields.io/github/repo-size/SunitaAcharya/myYogaMate.svg?label=Repo%20size&amp;style=flat-square" alt="" /> 
+<img src="https://img.shields.io/github/contributors/SunitaAcharya/myYogaMate.svg?style=flat&amp;label=Contributors&amp;maxAge=86400" alt="Contributors" />
+</p>
+
+<h2 id="contents">Contents</h2>
+
+
+
 
 ### Some useful GIT commands
 
@@ -50,7 +63,13 @@ git pull <br/>
 git --help <br/>
 <br/>
 
-### Referrence Links
+<h2 id="credits">Credits</h2>
+ <a href="https://github.com/SunitaAcharya/myYogaMate">Sunita Acharya</a> <br/>
+ <a href="https://github.com/YuanZhang2672750">Yuan Zhang</a> <br/>
+ <a href="https://github.com/siyu0415">Siyu Liu</a> <br/>
+ <a href="https://github.com/qwershu007">Shujun Wang</a> <br/>
+
+<h2 id="referencelinks">Reference Links</h2>
 <br/>
 To install Ubuntu on Windows 10 for Dual SetUP:https://linuxconfig.org/how-to-install-ubuntu-20-04-alongside-windows-10-dual-boot
 <br/>
