@@ -39,3 +39,21 @@ int32_t ImageProcessor_Initialize::Initialize(const ImageProcessor_Initialize::I
     }
     return 0;
 }
+
+int32_t ImageProcessor_Finalize::Finalize()
+{
+    if (!s_engine) 
+    {
+        
+        std::cout<<"Not initialized\n"<<std::endl;
+        return -1;
+    }
+
+    if (s_engine->Finalize() != PoseEngine::kRetOk) 
+    {
+        return -1;
+    }
+
+    return 0;
+}
+
