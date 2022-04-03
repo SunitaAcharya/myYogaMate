@@ -16,4 +16,18 @@ class image_show
         
 };
 
+class camera_show
+{
+private:
+    static std::string m_input_name_cam;   
+
+public:
+    static bool key_status;
+    camera_show() { }
+    ~camera_show() { }
+    int32_t cam_process(std::string Webcam_id);
+
+};
+
+
 #endif
