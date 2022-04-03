@@ -18,7 +18,7 @@ class KeyInterface
 public:
     virtual ~KeyInterface() {}
     virtual bool key_check(cv::VideoCapture& cap)=0;
-    
+    virtual std::string get_img_name(void)=0;
 };
 
 /*This class is about checking the image source*/
@@ -45,7 +45,7 @@ public:
     ~key() {}
     static std::string image_input_name;
     virtual bool key_check(cv::VideoCapture& cap);
-    
+    virtual std::string get_img_name(void);
 
 };
 
