@@ -88,4 +88,7 @@ bool key::key_check(cv::VideoCapture& cap)
     return ret_to_quit;
 }
 
-
+std::string key::get_img_name(void)
+{  
+    return image_input_name;
+}
