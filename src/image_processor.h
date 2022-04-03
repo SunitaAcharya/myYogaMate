@@ -25,4 +25,12 @@ class ImageProcessor_Initialize
     static int32_t Initialize(const InputParam& input_param);
 };
 
+
+class ImageProcessor_Finalize
+{
+    public:
+    static int32_t Finalize(void);
+};
+
+
 #endif
