@@ -10,7 +10,7 @@ This project is built in C++ code using WebCam for detect the human pose from us
 
 <h2 id="status">Status</h2>
 <p><a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License" /></a>
-<img src="https://img.shields.io/github/stars/SunitaAcharya/myYogaMate.svg?style=flat&amp;label=Star&amp;maxAge=86400" alt="Stars" />
+<img src="https://img.shields.io/github/stars/SunitaAcharya/myYogaMate.svg?style=flat&amp;label=Star&amp;maxAge=86400 " alt="Stars" />
 <a href="https://github.com/SunitaAcharya/myYogaMate/issues"><img src="https://img.shields.io/github/issues-raw/SunitaAcharya/myYogaMate.svg" alt="GitHub open issues" /></a> 
 <a href="https://github.com/SunitaAcharya/myYogaMate/pulls"><img src="https://img.shields.io/github/issues-pr-raw/SunitaAcharya/myYogaMate.svg" alt="GitHub open pull requests" /></a> <img src="https://img.shields.io/github/repo-size/SunitaAcharya/myYogaMate.svg?label=Repo%20size&amp;style=flat-square" alt="" /> 
 <img src="https://img.shields.io/github/contributors/SunitaAcharya/myYogaMate.svg?style=flat&amp;label=Contributors&amp;maxAge=86400" alt="Contributors" />
