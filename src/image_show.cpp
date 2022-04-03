@@ -1,11 +1,7 @@
 #include <iostream>
 #include <string>
 #include <opencv2/opencv.hpp>
-
-//#include<thread>
-//#define NUM_THREADS 5
 #include <mutex>
-
 #include <opencv2/highgui.hpp>
 
 #include "image_processor.h"
@@ -13,15 +9,20 @@
 #include "image_show.h"
 
 #define WORK_DIR                      RESOURCE_DIR
-#define DEFAULT_INPUT_IMAGE           RESOURCE_DIR"Yoga1.jpg"
 #define LOOP_NUM_FOR_TIME_MEASUREMENT 10
 std::mutex mtx;
 
+/***** global variables *****/
 int Thread_num = 0;
 int BOOL[8]={0,0,0,0,0,0,0,0};
 double angle0[8]={0,0,0,0,0,0,0,0};
 
+/***** static variables from image_show class *****/
+bool camera_show::key_status = 0;
+std::string camera_show::m_input_name_cam;
+std::string image_show::m_input_name_img;
 
+/*
 int32_t image_show::cam_process ()
 {
     mtx.lock();
@@ -84,54 +85,62 @@ int32_t image_show::cam_process ()
     
 
 }
+*/
 
-int32_t image_show::img_process ()
+/***** img_process function aims to process images from picture *****/
+int32_t image_show::img_process (std::string Source_path)
 {
-    mtx.lock();
+    mtx.lock(); // lock
+    Thread_num = 2; // 2 is webcam thread
 
-    Thread_num = 2;
-    std::string input_name = _Source_path;
+    /***** change image source *****/
+    key img;
+    if (m_input_name_img.empty())
+    {
+        m_input_name_img = Source_path;
+    }
+    else m_input_name_img = img.get_img_name();
+   
+    /***** create image instance, check image format *****/
+    cv::VideoCapture cap;
+    image_check source_check_img;
+    source_check_img.source_check(m_input_name_img,cap);
 
-    cv::VideoCapture cap;   
-     if (!CommonHelper::FindSourceImage(input_name, cap)) {
-         return -1;
-     }
-
+    /***** create writer *****/
     cv::VideoWriter writer;
- 
-     ImageProcessor::InputParam input_param = { WORK_DIR, 4 };
-     if (ImageProcessor::Initialize(input_param) != 0) {
-         printf("Initialization Error\n");
-         return -1;
-     }
+    ImageProcessor_Initialize::InputParam input_param = { WORK_DIR, 4 };
+    if (ImageProcessor_Initialize::Initialize(input_param) != 0) 
+    {
+        std::cout<< "Initialization Error" << std::endl;
+        return -1;
+    }
 
-        cv::Mat image;
-        if (cap.isOpened()) {
-            cap.read(image);
-        } else {
-            image = cv::imread(input_name);
-        }
+    /***** add lines in images *****/
+    cv::Mat image;
+    if (cap.isOpened()) 
+    {
+        cap.read(image);
+    } 
+    else 
+    {
+        image = cv::imread(m_input_name_img);
+    }
+    ImageProcessor_Process::Result result;
+    ImageProcessor_Process::Process(image, result);
 
-        flip(image, image, 1);
-        cv::resize(image, image, cv::Size(), 2.5, 2.5);
-
-        ImageProcessor::Result result;
-        ImageProcessor::Process(image, result);
-
+    /***** set image cv parameters, resize and flip *****/
+    image_helper img_cv_set;
+    img_cv_set.cv_setparam(image, 2, 1, 0);
         
-      
-        if (writer.isOpened()) writer.write(image);
-        cv::imshow("Image show", image);
+    /***** show images *****/
+    if (writer.isOpened()) writer.write(image);
+    cv::imshow("Image show", image);
 
-    //double angle0[8]={2,2,0,0,0,0,0,0};
-    //printf("Angle ===== %f,\n", angle0[1]);
-
-    ImageProcessor::Finalize();
+    /***** finalize image process *****/
+    ImageProcessor_Finalize::Finalize();
     if (writer.isOpened()) writer.release();
-    //cv::waitKey(-1);
-    
-    Thread_num = 0;
+    Thread_num = 0; 
     mtx.unlock(); // before return 0;
-    return 0;
-    
+    return 0;   
 }
+
