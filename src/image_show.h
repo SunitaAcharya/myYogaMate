@@ -3,17 +3,21 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui.hpp>
 
 class image_show
 {
     private:
         static std::string m_input_name_img;
-   
+   	std::vector<cv::Mat> imageVector;
     public:    
         image_show() { }
         ~image_show() { }
         int32_t img_process(std::string Source_path);
-        
+        void multipleImage(std::vector<cv::Mat> imgVector, cv::Mat& dst, int imgCols);
+        void homepage();
 };
 
 class camera_show
