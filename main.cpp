@@ -11,7 +11,12 @@
 
 
 int32_t main(int argc, char* argv[])
-{   
+{
+
+    /***** show homepage and wait any key press from users *****/
+    image_show homepage_show;
+    homepage_show.homepage();
+
     /*two threads, th_img for image process and th_cam for webcam process*/
     /*th_img and th_cam, lock has been added in image_show::img_process and image_show::cam_process to avoid mixing-up common used variables */
     std::string cam_path = DEFAULT_WEBCAM_ID;
