@@ -87,6 +87,11 @@ bool key::key_check(cv::VideoCapture& cap)
             image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose5.jpg";
             ret_to_quit = false;
             break;
+	case '6':
+            cap.release();
+            image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose6.jpg";
+            ret_to_quit = false;
+            break;
         }
     
     return ret_to_quit;
