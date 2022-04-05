@@ -1,12 +1,16 @@
 #include <iostream>
 #include <string>
-#include <chrono> //
+#include <chrono> 
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
 
 #include "image_helper.h"
 
 #define DEFAULT_IMAGE_PATH_IMAGEHELPER            RESOURCE_DIR
+
+/***** static variables from image_helper class *****/
+std::string key::image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose1.jpg";
+
 
 int image_check::source_check(const std::string& input_name,cv::VideoCapture& cap)
 {
@@ -91,4 +95,36 @@ bool key::key_check(cv::VideoCapture& cap)
 std::string key::get_img_name(void)
 {  
     return image_input_name;
+}
+
+
+/***** function cv_showparam  //mat: input frame; // zoom: ratio of the windows; //flip: 0 no flip, 1 flip *****/
+void image_helper::cv_setparam(cv::Mat& mat, double zoom, bool flip, bool showFPS) 
+{
+    /***** initialise and zoom *****/
+    m_flip = flip;
+    if (mat.empty() == 1)
+    {
+        std::cout << "The input image is empty" << std::endl;
+    }  
+    else m_mat = mat;
+    if(zoom > 0 && zoom < 10) m_zoom = zoom;
+    else std::cout << "The value should be between 0 and 10" << std::endl;
+
+    /***** calculate FPS *****/
+    static auto time1 = std::chrono::steady_clock::now();
+    auto time2 = std::chrono::steady_clock::now();
+    fps = 1e9 / (time2 - time1).count();
+    time1 = time2;
+    fps_result = "FPS: " + std::to_string(fps);
+
+    /***** process image *****/
+    // flip image, 0 original, 1 flip
+    cv::flip(m_mat, m_mat, m_flip); 
+    /***** show FPS *****/
+    if (showFPS)
+    cv::putText(m_mat, fps_result, cv::Point(10,50), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,0,0), 2, 8); 
+    /***** set window size *****/
+    cv::resize(m_mat, mat, cv::Size(), m_zoom, m_zoom); 
+    
 }

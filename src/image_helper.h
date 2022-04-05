@@ -13,12 +13,34 @@ public:
     virtual int source_check(const std::string& input_name,cv::VideoCapture& cap)=0;
 };
 
+/* an interface for key function */
 class KeyInterface 
 {
 public:
     virtual ~KeyInterface() {}
     virtual bool key_check(cv::VideoCapture& cap)=0;
     virtual std::string get_img_name(void)=0;
+};
+
+
+class image_helper
+{
+private:
+    
+    cv::Mat m_mat;
+    double m_zoom;
+    bool m_flip;
+    double fps;
+    std::string fps_result;
+
+public:
+    
+    image_helper() {}
+    ~image_helper() {}
+
+    //std::string set_img_name();
+    void cv_setparam(cv::Mat& mat, double zoom, bool flip, bool showFPS);  
+
 };
 
 /*This class is about checking the image source*/
@@ -39,7 +61,7 @@ public:
 class key : public KeyInterface
 {
 private:
-
+    //std::string input_name1 = DEFAULT_IMAGE_PATH;
 public:
     key() {}
     ~key() {}

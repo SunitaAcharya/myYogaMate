@@ -16,13 +16,15 @@ namespace cv
 class ImageProcessor_Initialize
 {   
     public:
-    typedef struct InputParam
+    typedef struct Result
     {
-    char work_dir[256];
-    std::int32_t  num_threads;
-    } InputParam;
+    double time_pre_process;   // [msec]
+    double time_inference;    // [msec]
+    double time_post_process;  // [msec]
+    } Result;
 
-    static int32_t Initialize(const InputParam& input_param);
+    static int32_t Process(cv::Mat& mat, Result& result);
+    
 };
 
 
