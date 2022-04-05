@@ -4,7 +4,7 @@ This project is built in C++ code using WebCam for detect the human pose from us
 
 <br/>
 <p align="center">
-<img src="https://github.com/SunitaAcharya/myYogaMate/blob/main/logo.png" width="400" height="350">
+<img src="https://github.com/SunitaAcharya/myYogaMate/blob/main/image/logo.png" width="400" height="350">
   </p>
 <br/>
 
