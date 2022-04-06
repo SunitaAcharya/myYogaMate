@@ -18,50 +18,27 @@ This project is built in C++ code using WebCam for detect the human pose from us
 
 <h2 id="contents">Contents</h2>
 
-
-
-
 ### Some useful GIT commands
+```sh
+$ git init 
+$ git clone git@github.com:SunitaAcharya/myYogaMate.git  
+```
+<br/>
 
-<br/>
-<b>Git Command Line to run in command prompt</b> <br/>
-echo "myYogaMate" >> README.md <br/>
-git init <br/>
-git add README.md <br/>
-git branch -M main <br/>
-git remote add origin git@github.com:SunitaAcharya/myYogaMate.git   <br/>
-cat filename <br/>
-git checkout master <br/>
-git branch <br/>
-<b>To checkout development repository then </b> <br/>
-git checkout development <br/>
-<b>To change it back to main repository again change oit back to </b><br/>
-git checkout main <br/>
-<b>To add new file from local system to Git</b>
-<br/>
-vim filename <br/>
-git add filename <br/>
-<b>To add all the files at once </b><br/>
-git add * <br/>
-<b> To remove files </b>
-rm -r directoryname <br/>
-rm filename <br/>
-  
-To commit files <br/>
-git commit -m "commit comment" <br/>
+### To Build
+```sh
+cmake
+make
+```
 
-git push -u origin main   <br/>
-git push --set-upstream origin master <br/>
-After setting up the respository , this command can be used to push the code <br/>
-git push <br/>
-<b> To pull code from git to local system </b>
-<br/>
-git pull <br/>
+### Install
+```sh
+sudo make install
+```
 
-<b>For help</b>
-<br/>
-git --help <br/>
-<br/>
+### How to use it
+
+
 
 <h2 id="credits">Credits</h2>
  <a href="https://github.com/SunitaAcharya/myYogaMate">Sunita Acharya</a> <br/>
