@@ -8,6 +8,7 @@
 #include "image_processor.h"
 #include "common_helper_cv.h"
 #include "image_show.h"
+#include "image_helper.h"
 
 #define WORK_DIR                      RESOURCE_DIR
 #define LOOP_NUM_FOR_TIME_MEASUREMENT 10
