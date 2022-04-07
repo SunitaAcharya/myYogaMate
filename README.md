@@ -18,10 +18,13 @@ This project is built in C++ code using WebCam for detect the human pose from us
 
 <h2 id="contents">Contents</h2>
 
-### Some useful GIT commands
+### To download our project along with submodule
 ```sh
 $ git init 
 $ git clone git@github.com:SunitaAcharya/myYogaMate.git  
+$ cd myYogaMate/
+$ git submodule update --init --recursive --remote
+$ sh third_party/download_prebuilt_libraries.sh
 ```
 <br/>
 
@@ -37,7 +40,9 @@ sudo make install
 ```
 
 ### How to use it
-
+1. Run the above git commands
+2. Install cmake,make using sudo
+3.
 
 
 <h2 id="credits">Credits</h2>
