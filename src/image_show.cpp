@@ -136,7 +136,7 @@ int32_t image_show::img_process (std::string Source_path)
 
     /***** set image cv parameters, resize and flip *****/
     image_helper img_cv_set;
-    img_cv_set.cv_setparam(image, 2, 1, 0);
+    img_cv_set.cv_setparam(image, 0.2, 1, 0);
         
     /***** show images *****/
     if (writer.isOpened()) writer.write(image);
