@@ -9,7 +9,6 @@
 #include <fstream>
 #include <memory>
 #include <unistd.h>
-#include <string.h>
 #include <iostream>
 
 /* for OpenCV */
@@ -23,9 +22,10 @@
 std::unique_ptr<PoseEngine> s_engine;
 extern int Thread_num;
 extern double angle0[8];
+extern int BOOL[8];
 double angle[8];
-//double angle0[8];
 int Learner[12][2]; 
+
 
 int32_t ImageProcessor_Initialize::Initialize(const ImageProcessor_Initialize::InputParam& input_param)
 {
@@ -57,6 +57,7 @@ int32_t ImageProcessor_Finalize::Finalize()
     return 0;
 }
 
+
 int32_t ImageProcessor_Command::Command(int32_t cmd)
 {
     if (!s_engine) 
@@ -74,7 +75,6 @@ int32_t ImageProcessor_Command::Command(int32_t cmd)
     }
 }
 
-/* calculating human pose keypoints */
 static const std::vector<std::pair<int32_t, int32_t>> kJointLineList {
     /* face */
     {0, 2},
@@ -174,10 +174,10 @@ int32_t ImageProcessor_Process::Process(cv::Mat& mat, ImageProcessor_Process::Re
         {                
             if ((angle[n]<(angle0[n]-20)) || (angle[n]>(angle0[n]+20)))
             {
-                *(prt+n)=n+1;
+                BOOL[n]=n+1;
             }
             else{
-                *(prt+n) = 0;
+                BOOL[n] = 0;
             }   
         }
 
@@ -196,7 +196,7 @@ int32_t ImageProcessor_Process::Process(cv::Mat& mat, ImageProcessor_Process::Re
             {
                 for (int k = 0; k <8; k++)
                 {
-                    if(*(prt+k)!=0)
+                    if(BOOL[k]!=0)
                     {
                     cv::line(mat, cv::Point(Learner[k+2][0], Learner[k+2][1]), cv::Point(Learner[k][0], Learner[k][1]), cv::Scalar(0, 0, 255), 6);
                     cv::line(mat, cv::Point(Learner[k+2][0], Learner[k+2][1]), cv::Point(Learner[k+4][0], Learner[k+4][1]), cv::Scalar(0, 0, 255), 6);
@@ -218,7 +218,7 @@ int32_t ImageProcessor_Process::Process(cv::Mat& mat, ImageProcessor_Process::Re
             {
                 for(int k=0; k<8; k++)
                 {
-                    if(*(prt+k) !=0)
+                    if(BOOL[k] !=0)
                     {
                     cv::circle(mat, cv::Point(Learner[k+2][0], Learner[k+2][1]), 5, cv::Scalar(0, 0, 255),2);
                     }
@@ -227,7 +227,7 @@ int32_t ImageProcessor_Process::Process(cv::Mat& mat, ImageProcessor_Process::Re
             
             
         }
-        delete[] prt;
+        delete []prt;
     }
     
     return 0;
