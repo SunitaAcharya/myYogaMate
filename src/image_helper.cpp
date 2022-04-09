@@ -43,10 +43,10 @@ int image_check::source_check(const std::string& input_name,cv::VideoCapture& ca
         if (!cap.isOpened()) // Check if the camera is open successfully
         {
             std::cout<<"Open camera FAIL !! ";
-            return 0;
+            return -1;
         }
     }
-    return 0;
+    return -1;
 }
 
 bool key::key_check(cv::VideoCapture& cap)
