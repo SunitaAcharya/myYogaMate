@@ -23,7 +23,7 @@ int image_check::source_check(const std::string& input_name,cv::VideoCapture& ca
     	if(img.empty())
     	{
     		std::cout << "Input source NOT found !!";
-    		return 0;
+    		return -1;
     	}
     }   
     else // read from camera
