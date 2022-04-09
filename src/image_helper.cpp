@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <chrono> 
+#include <chrono> //
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
 
@@ -8,8 +8,10 @@
 
 #define DEFAULT_IMAGE_PATH_IMAGEHELPER            RESOURCE_DIR
 
+extern int BOOL[8];
 /***** static variables from image_helper class *****/
 std::string key::image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose1.jpg";
+double image_helper::zoomsize = 1.0;
 
 
 int image_check::source_check(const std::string& input_name,cv::VideoCapture& cap)
@@ -87,9 +89,19 @@ bool key::key_check(cv::VideoCapture& cap)
             image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose5.jpg";
             ret_to_quit = false;
             break;
-	case '6':
+        case '6':
             cap.release();
             image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose6.jpg";
+            ret_to_quit = false;
+            break;
+        case ',':
+            if(image_helper::zoomsize > 0.21) image_helper::zoomsize = image_helper::zoomsize - 0.2;
+            else std::cout << "The size is too small" << std::endl;
+            ret_to_quit = false;
+            break;
+        case '.':
+            if(image_helper::zoomsize < 5) image_helper::zoomsize = image_helper::zoomsize + 0.2;
+            else std::cout << "The size is too large" << std::endl;
             ret_to_quit = false;
             break;
         }
@@ -102,20 +114,16 @@ std::string key::get_img_name(void)
     return image_input_name;
 }
 
-
-/***** function cv_showparam  //mat: input frame; // zoom: ratio of the windows; //flip: 0 no flip, 1 flip *****/
-void image_helper::cv_setparam(cv::Mat& mat, double zoom, bool flip, bool showFPS) 
+/***** function cv_FPS, show FPS in images *****/
+void image_helper::cv_FPS(cv::Mat& mat) 
 {
-    /***** initialise and zoom *****/
-    m_flip = flip;
+    /***** initialise *****/
     if (mat.empty() == 1)
     {
         std::cout << "The input image is empty" << std::endl;
     }  
     else m_mat = mat;
-    if(zoom > 0 && zoom < 10) m_zoom = zoom;
-    else std::cout << "The value should be between 0 and 10" << std::endl;
-
+    
     /***** calculate FPS *****/
     static auto time1 = std::chrono::steady_clock::now();
     auto time2 = std::chrono::steady_clock::now();
@@ -124,12 +132,66 @@ void image_helper::cv_setparam(cv::Mat& mat, double zoom, bool flip, bool showFP
     fps_result = "FPS: " + std::to_string(fps);
 
     /***** process image *****/
-    // flip image, 0 original, 1 flip
-    cv::flip(m_mat, m_mat, m_flip); 
     /***** show FPS *****/
-    if (showFPS)
-    cv::putText(m_mat, fps_result, cv::Point(10,50), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,0,0), 2, 8); 
-    /***** set window size *****/
-    cv::resize(m_mat, mat, cv::Size(), m_zoom, m_zoom); 
+    cv::putText(m_mat, fps_result, cv::Point(2,15), cv::FONT_HERSHEY_SIMPLEX,0.5, cv::Scalar (0,0,0), 2, 8); 
     
 }
+
+/***** function pose_alert, show pose information such as pose correct or pose incorrect in images *****/
+void image_helper::pose_alert(cv::Mat& mat)
+{
+    int posecorrect[8] = {0,0,0,0,0,0,0,0};
+    int count = 0;
+    bool arraysEqual = true;
+    while (arraysEqual && count < 8)
+    {
+        if (BOOL[count] != posecorrect[count])
+            arraysEqual = false;
+        count++;
+    }
+
+    /***** show correct or incorrect information *****/
+    if (arraysEqual)
+        cv::putText(mat, "Your pose is correct, keep it!", cv::Point(105,35), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+    else
+        cv::putText(mat, "    Your pose is incorrect    ", cv::Point(105,35), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,0,255), 2, 12);
+    
+}
+
+/***** function cv_resize, resize window (overload) *****/
+/***** change size of the window by pressing "," (<) or "." (>) *****/
+void image_helper::cv_resize(cv::Mat& mat)
+{
+    /***** set window size *****/
+    if (mat.empty() == 1)
+    {
+        std::cout << "The input image is empty" << std::endl;
+    }  
+    else m_mat = mat;
+    cv::resize(mat, mat, cv::Size(), zoomsize, zoomsize);
+}
+
+/***** function cv_resize, resize window (overload) *****/
+/***** fixed size *****/
+void image_helper::cv_resize(cv::Mat& mat, double ratio)
+{
+    if (mat.empty() == 1)
+    {
+        std::cout << "The input image is empty" << std::endl;
+    }  
+    else m_mat = mat;
+    cv::resize(mat, mat, cv::Size(), ratio, ratio);
+
+}
+
+/***** function cv_flip, flip the images *****/
+void image_helper::cv_flip(cv::Mat& mat)
+{
+    if (mat.empty() == 1)
+    {
+        std::cout << "The input image is empty" << std::endl;
+    }  
+    else m_mat = mat;
+    cv::flip(m_mat, m_mat, 1);
+}
+
