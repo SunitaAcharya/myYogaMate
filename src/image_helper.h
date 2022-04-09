@@ -3,7 +3,7 @@
 #include <string>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
-#define DEFAULT_IMAGE_PATH1            RESOURCE_DIR //"Yoga1.jpg"
+#define DEFAULT_IMAGE_PATH1            RESOURCE_DIR
 
 /* an interface for image_check function */
 class ImageSourceInterface 
@@ -22,24 +22,27 @@ public:
     virtual std::string get_img_name(void)=0;
 };
 
-
 class image_helper
 {
 private:
     
     cv::Mat m_mat;
     double m_zoom;
-    bool m_flip;
     double fps;
     std::string fps_result;
+
 
 public:
     
     image_helper() {}
     ~image_helper() {}
+    static double zoomsize;
 
-    //std::string set_img_name();
-    void cv_setparam(cv::Mat& mat, double zoom, bool flip, bool showFPS);  
+    void cv_FPS(cv::Mat& mat);
+    void pose_alert(cv::Mat& mat);
+    void cv_resize(cv::Mat& mat); // overload for webcam window
+    void cv_resize(cv::Mat& mat, double ratio); //overload for fixed image window
+    void cv_flip(cv::Mat& mat);
 
 };
 
