@@ -207,3 +207,62 @@ void image_show::homepage()
     std::cout << "Please press any key to start" << std::endl;
     cv::waitKey(0);
 }
+
+void image_show::registerCallback(IMAGEcallback* cb)
+{
+    imagecallback = cb;
+}
+
+void image_show::unRegisterCallback() 
+{
+	imagecallback = nullptr;
+}
+
+void image_show::run()
+{
+    /***** set parameters and initialize them *****/
+    std::string cam_path = "0";
+    std::string img_path = WORK_DIR "yogapose1.jpg";
+    int running = 1;
+
+    /***** show homepage and wait any key press from users *****/
+    image_show homepage_show;
+    homepage_show.homepage();
+
+    /***** run image and webcam *****/
+    while(running)
+    {
+        /***** create yoga_img and yoga_cam instance *****/      
+        image_show yoga_img;
+        camera_show yoga_cam;
+        /***** determine callback, key, img_process, and cam_process functions *****/
+        if(nullptr != imagecallback)
+        {
+            if (camera_show::key_status == 1 || yoga_img.img_process(img_path) == -1 || yoga_cam.cam_process(cam_path) == -1) break;
+            imagecallback->yoga_thread(cam_path, WORK_DIR "yogapose1.jpg");
+        }
+    }
+}
+
+void image_show::start()
+{
+    std::cout << "image start \n";
+    if(nullptr != imgThread){
+        std::cout << "thread issue \n";
+        return;
+    }
+    imgThread = new std::thread(exec, this);
+}
+
+void image_show::stop()
+{
+    running = 0;
+    if(nullptr != imgThread)
+    {
+        imgThread->join();
+        cv::destroyAllWindows();
+        delete imgThread;
+        imgThread = nullptr;
+    }
+}
+
