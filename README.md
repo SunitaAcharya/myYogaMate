@@ -24,7 +24,7 @@
 * [References](#references)
 
 ### About the Project
-My Yoga Mate - MYM , is a project built by postgraduate students of University of Glasgow. MYM detects human posture doing yoga and compares it with the stored original image and state the user whether the pose is correct or not. We have build this project in C++ language and used Tensorflow libaries to find the key points of hunan pose estimation. This will be a great use for people who do yoga on a daily basis where they can get a guidance for correct posture of a human doing a particular yoag pose. We can extend our project and make an app for this so that it will be easy and convinient foreveryone to use it daily.
+My Yoga Mate - MYM , is a project built by postgraduate students of University of Glasgow. MYM detects human posture doing yoga and compares it with the stored original image and state the user whether the pose is correct or not. We have build this project in C++ language and used Tensorflow libaries to find the key points of hunan pose estimation and posture angle. This will be a great use for people who do yoga on a daily basis where they can get a guidance for correct posture of a human doing a particular yoag pose. We can extend our project and make an app for this so that it will be easy and convinient for everyone to use it daily.
 
 ### Requirements
 Hardware 
