@@ -67,7 +67,10 @@ int32_t camera_show::cam_process (std::string Webcam_id)
 
         /***** set webcam cv parameters, resize and flip *****/
         image_helper cam_cv_set;
-        cam_cv_set.cv_setparam(image, 3, 1, 1);
+        cam_cv_set.cv_flip(image);
+        cam_cv_set.pose_alert(image);
+        cam_cv_set.cv_FPS(image);
+        cam_cv_set.cv_resize(image);
 
         /***** show images *****/
         if (writer.isOpened()) writer.write(image);
@@ -136,8 +139,9 @@ int32_t image_show::img_process (std::string Source_path)
 
     /***** set image cv parameters, resize and flip *****/
     image_helper img_cv_set;
-    img_cv_set.cv_setparam(image, 0.2, 1, 0);
-        
+    img_cv_set.cv_flip(image);
+    img_cv_set.cv_resize(image, 0.3);
+
     /***** show images *****/
     if (writer.isOpened()) writer.write(image);
     cv::imshow("Image show", image);
@@ -192,6 +196,14 @@ void image_show::homepage()
     cv::Mat image5 = cv::imread(WORK_DIR "yogapose5.jpg");
     cv::Mat image6 = cv::imread(WORK_DIR "yogapose6.jpg");
     cv::Mat dst;
+    /***** flip all images *****/
+    image_helper flipimage;
+    flipimage.cv_flip(image1);
+    flipimage.cv_flip(image2);
+    flipimage.cv_flip(image3);
+    flipimage.cv_flip(image4);
+    flipimage.cv_flip(image5);
+    flipimage.cv_flip(image6);
 
     imageVector.push_back(image1);
     imageVector.push_back(image2);
