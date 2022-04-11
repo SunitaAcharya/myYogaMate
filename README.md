@@ -19,8 +19,12 @@
 * [About the project](#about-the-project)
 * [Requirements](#requirements)
 * [Guide](#guide)
+* [Code Structure](#code-structure)
+* [Workflow](workflow)
+* [Implementation](#implementation)
 * [License](#license)
 * [Authors](#authors)
+* [Social Media](#social-media)
 * [References](#references)
 
 ### About the Project
@@ -35,6 +39,7 @@ Software
 * Ubuntu(x64)
 * C++ API
 * Visual Studio(2019)
+* OpenCV (4.5.5)
 
 Install<br/>
 ```sh
@@ -62,14 +67,22 @@ make    #to compile program
 ./main 
 ```
 
-
-
 ### Guide
-1. Run the above commands to download our siurce code and build it
+1. Run the above commands to download our source code and build it
 2. Press any key to start the program
 3. Select 1,2 ,3,4,5,6 to select image
 4. Press q to exit
 5. Press "," or "." to resize webcam window
+
+### Code Structure
+* image_helper.cpp
+* image_processor.cpp
+* image_show.cpp
+* pose_engine.cpp
+
+### Workflow
+
+### Implementation
 
 
 ### License
@@ -82,6 +95,15 @@ Please visit <a href="https://github.com/SunitaAcharya/myYogaMate/blob/main/LICE
  <a href="https://github.com/YuanZhang2672750">Yuan Zhang</a> <br/>
  <a href="https://github.com/siyu0415">Siyu Liu</a> <br/>
  <a href="https://github.com/qwershu007">Shujun Wang</a> <br/>
+
+### Social Media
+ Follow us on : 
+<table>
+  <tr>
+    <td><a href="https://www.facebook.com/profile.php?id=100080408434751"><img src="https://edent.github.io/SuperTinyIcons/images/svg/facebook.svg" width="45" </a></td>
+    <td><a href="https://www.instagram.com/myyogamate_/"><img src="https://edent.github.io/SuperTinyIcons/images/svg/instagram.svg" width="45" </a></td>
+    </tr>
+    </table>
 
 ### References
 <a href="https://linuxconfig.org/how-to-install-ubuntu-20-04-alongside-windows-10-dual-boot">To install Ubuntu on Windows 10 for Dual SetUP </a></br> 
@@ -96,4 +118,4 @@ https://www.youtube.com/watch?v=fiDaAc7z_kQ&list=PLm3gcFKTH-o-GhANAGu93TYwHc6YmV
 
 
  </br> </br>
-&copy; 2022 Copyright UofG_rtep_team4
+&copy; 2022 Copyright UofG_Real_Time_Embedded_Systems_Team4
