@@ -33,7 +33,7 @@ My Yoga Mate - MYM , is a project built by postgraduate students of University o
 ### Requirements
 Hardware 
 * Linux Laptop/ Ubuntu dual setup in Windows Laptop
-* Webcam
+* Webcam and Keyboard
 
 Software
 * Ubuntu(x64)
