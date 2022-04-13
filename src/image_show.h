@@ -18,14 +18,13 @@ class image_show
     private:
         static std::string m_input_name_img;
         std::vector<cv::Mat> imageVector;
+        int MAX_PIXEL;
 
         std::thread* imgThread = nullptr;
         int running = 0;
         IMAGEcallback* imagecallback = nullptr;
         void run();
-        static void exec(image_show* imageshow) {
-		imageshow->run();
-	    }
+        static void exec(image_show* imageshow) { imageshow->run(); }
 
     public:    
         image_show() { }
@@ -33,6 +32,15 @@ class image_show
         int32_t img_process(std::string Source_path);
         void multipleImage(std::vector<cv::Mat> imgVector, cv::Mat& dst, int imgCols);
         void homepage();
+        
+        void setMAX(int run) // set value function for variable MAX_PIXEL
+        {
+            MAX_PIXEL=run;
+        }
+        int getMAX()
+        {
+            return MAX_PIXEL;
+        }
         
         void registerCallback(IMAGEcallback* cb);
         void unRegisterCallback();
@@ -44,9 +52,11 @@ class image_show
 class camera_show
 {
 private:
-    static std::string m_input_name_cam;   
+    static std::string m_input_name_cam;
+    int32_t frame_cnt = 0;    
 
 public:
+    static int Thread_num;
     static bool key_status;
     camera_show() { }
     ~camera_show() { }
