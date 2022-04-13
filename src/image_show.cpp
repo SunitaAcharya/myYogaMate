@@ -3,32 +3,25 @@
 #include <mutex>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
-
-
 #include "image_processor.h"
-#include "common_helper_cv.h"
 #include "image_show.h"
 #include "image_helper.h"
 
 #define WORK_DIR                      RESOURCE_DIR
 #define LOOP_NUM_FOR_TIME_MEASUREMENT 10
-std::mutex mtx;
-
-/***** global variables *****/
-int Thread_num = 0;
-int BOOL[8]={0,0,0,0,0,0,0,0};
-double angle0[8]={0,0,0,0,0,0,0,0};
 
 /***** static variables from image_show class *****/
 bool camera_show::key_status = 0;
 std::string camera_show::m_input_name_cam;
 std::string image_show::m_input_name_img;
+int camera_show::Thread_num;
+std::mutex mtx;
 
 /***** cam_process function aims to process images from webcam *****/
 int32_t camera_show::cam_process (std::string Webcam_id)
 {
     mtx.lock(); // lock
-    Thread_num = 1; // 1 is webcam thread
+    camera_show::Thread_num = 1; // 1 is webcam thread
     m_input_name_cam = Webcam_id;
 
     cv::VideoCapture cap; 
@@ -48,7 +41,6 @@ int32_t camera_show::cam_process (std::string Webcam_id)
 
     /***** output each frame *****/
     /***** add lines in each frame *****/
-    int32_t frame_cnt = 0;
     for (frame_cnt = 0; cap.isOpened() || frame_cnt < LOOP_NUM_FOR_TIME_MEASUREMENT; frame_cnt++) 
     {
         cv::Mat image;
@@ -62,8 +54,8 @@ int32_t camera_show::cam_process (std::string Webcam_id)
         }
 
         if (image.empty()) break;
-        ImageProcessor_Process::Result result;
-        ImageProcessor_Process::Process(image, result);
+        ImageProcessor_Process imgpro;
+        imgpro.Process(image);
 
         /***** set webcam cv parameters, resize and flip *****/
         image_helper cam_cv_set;
@@ -100,7 +92,7 @@ int32_t camera_show::cam_process (std::string Webcam_id)
 int32_t image_show::img_process (std::string Source_path)
 {
     mtx.lock(); // lock
-    Thread_num = 2; // 2 is webcam thread
+    camera_show::Thread_num = 2;  // 2 is webcam thread
 
     /***** change image source *****/
     key img;
@@ -134,8 +126,9 @@ int32_t image_show::img_process (std::string Source_path)
     {
         image = cv::imread(m_input_name_img);
     }
-    ImageProcessor_Process::Result result;
-    ImageProcessor_Process::Process(image, result);
+    
+    ImageProcessor_Process imgpro;
+    imgpro.Process(image);
 
     /***** set image cv parameters, resize and flip *****/
     image_helper img_cv_set;
@@ -159,7 +152,9 @@ int32_t image_show::img_process (std::string Source_path)
 void image_show::multipleImage(std::vector<cv::Mat> imgVector, cv::Mat& dst, int imgCols) 
 {
     /***** set max pixel for every images *****/
-    const int MAX_PIXEL=600;
+    image_show img;
+    img.setMAX(600); // set values for MAX_PIXEL
+
     int imgNum = imgVector.size();
     /***** set the longest side and resize to 600 pixel *****/
     cv::Size imgOriSize = imgVector[0].size();
@@ -235,7 +230,7 @@ void image_show::run()
     /***** set parameters and initialize them *****/
     std::string cam_path = "0";
     std::string img_path = WORK_DIR "yogapose1.jpg";
-    int running = 1;
+    running = 1;
 
     /***** show homepage and wait any key press from users *****/
     image_show homepage_show;
