@@ -17,15 +17,10 @@
 /* for My modules */
 #include "pose_engine.h"
 #include "image_processor.h"
+#include "image_show.h"
 
-/*** Global variable ***/
 std::unique_ptr<PoseEngine> s_engine;
-extern int Thread_num;
-extern double angle0[8];
-extern int BOOL[8];
-double angle[8];
-int Learner[12][2]; 
-
+int ImageProcessor_Process::angle_check[8]; 
 
 int32_t ImageProcessor_Initialize::Initialize(const ImageProcessor_Initialize::InputParam& input_param)
 {
@@ -100,10 +95,8 @@ static const std::vector<std::pair<int32_t, int32_t>> kJointLineList {
 
 static constexpr float kThresholdScoreKeyPoint = 0.2f;
 
-int32_t ImageProcessor_Process::Process(cv::Mat& mat, ImageProcessor_Process::Result& result)
+int32_t ImageProcessor_Process::Process(cv::Mat& mat)
 {
-
-
     if (!s_engine)
     {
         std::cout<<"Not initialized\n"<<std::endl;
@@ -159,25 +152,25 @@ int32_t ImageProcessor_Process::Process(cv::Mat& mat, ImageProcessor_Process::Re
             double line2=sqrt((Learner[k+2][0]-Learner[k+4][0])*(Learner[k+2][0]-Learner[k+4][0])+(Learner[k+2][1]-Learner[k+4][1])*(Learner[k+2][1]-Learner[k+4][1]));
             double line3=sqrt((Learner[k][0]-Learner[k+4][0])*(Learner[k][0]-Learner[k+4][0])+(Learner[k][1]-Learner[k+4][1])*(Learner[k][1]-Learner[k+4][1]));
             *(prt+k)=acos((line1*line1+line2*line2-line3*line3)/(2*line1*line2))*180.0/3.14;
-            if (Thread_num==1)
+            if (camera_show::Thread_num==1)
             {
-                angle[k]=*(prt+k);
+                angle_camera[k]=*(prt+k);
             }
-            else if (Thread_num==2)
+            else if (camera_show::Thread_num==2)
             {
-                angle0[k]=*(prt+k);  
+                angle_image[k]=*(prt+k);  
             }
         }
        
       
         for (int n = 0; n < 8; n++)
         {                
-            if ((angle[n]<(angle0[n]-20)) || (angle[n]>(angle0[n]+20)))
+            if ((angle_camera[n]<(angle_image[n]-20)) || (angle_camera[n]>(angle_image[n]+20)))
             {
-                BOOL[n]=n+1;
+                angle_check[n]=n+1;
             }
             else{
-                BOOL[n] = 0;
+                angle_check[n] = 0;
             }   
         }
 
@@ -192,11 +185,11 @@ int32_t ImageProcessor_Process::Process(cv::Mat& mat, ImageProcessor_Process::Re
             }
             
             /*mark wrong joint lines*/
-            if (Thread_num==1)
+            if (camera_show::Thread_num==1)
             {
                 for (int k = 0; k <8; k++)
                 {
-                    if(BOOL[k]!=0)
+                    if(angle_check[k]!=0)
                     {
                     cv::line(mat, cv::Point(Learner[k+2][0], Learner[k+2][1]), cv::Point(Learner[k][0], Learner[k][1]), cv::Scalar(0, 0, 255), 6);
                     cv::line(mat, cv::Point(Learner[k+2][0], Learner[k+2][1]), cv::Point(Learner[k+4][0], Learner[k+4][1]), cv::Scalar(0, 0, 255), 6);
@@ -214,11 +207,11 @@ int32_t ImageProcessor_Process::Process(cv::Mat& mat, ImageProcessor_Process::Re
                 cv::circle(mat, cv::Point(p.first, p.second), 5, cv::Scalar(0, 255, 0),2);
             }
             /*mark wrong joints*/
-            if (Thread_num==1)
+            if (camera_show::Thread_num==1)
             {
                 for(int k=0; k<8; k++)
                 {
-                    if(BOOL[k] !=0)
+                    if(angle_check[k] !=0)
                     {
                     cv::circle(mat, cv::Point(Learner[k+2][0], Learner[k+2][1]), 5, cv::Scalar(0, 0, 255),2);
                     }
@@ -232,3 +225,4 @@ int32_t ImageProcessor_Process::Process(cv::Mat& mat, ImageProcessor_Process::Re
     
     return 0;
 }
+
