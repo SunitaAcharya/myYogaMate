@@ -15,40 +15,38 @@ namespace cv
 
 class ImageProcessor_Initialize
 {   
-    public:
+public:
 
-    typedef struct InputParam
-    {
+typedef struct InputParam
+{
     char work_dir[256];
     std::int32_t  num_threads;
-    } InputParam;
+} InputParam;
 
     static int32_t Initialize(const InputParam& input_param);
 };
 
 class ImageProcessor_Process
 {   
-    public:
+private:
+    double angle_image[8]={0,0,0,0,0,0,0,0};
+    double angle_camera[8];
+    int Learner[12][2];
 
-    typedef struct Result
-    {
-    double time_pre_process;   // [msec]
-    double time_inference;    // [msec]
-    double time_post_process;  // [msec]
-    } Result;
-
-    static int32_t Process(cv::Mat& mat, Result& result);
+public:
+    static int angle_check[8];
+    int32_t Process(cv::Mat& mat);
 };
 
 class ImageProcessor_Finalize
 {
-    public:
+public:
     static int32_t Finalize(void);
 };
 
 class ImageProcessor_Command
 {
-    public:
+public:
     static int32_t Command(int32_t cmd);
 };
 
