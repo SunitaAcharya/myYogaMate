@@ -5,6 +5,7 @@
 #include <opencv2/highgui.hpp>
 
 #include "image_helper.h"
+#include "image_processor.h"
 
 #define DEFAULT_IMAGE_PATH_IMAGEHELPER            RESOURCE_DIR
 
@@ -145,7 +146,7 @@ void image_helper::pose_alert(cv::Mat& mat)
     bool arraysEqual = true;
     while (arraysEqual && count < 8)
     {
-        if (BOOL[count] != posecorrect[count])
+        if (ImageProcessor_Process::angle_check[count] != posecorrect[count])
             arraysEqual = false;
         count++;
     }
