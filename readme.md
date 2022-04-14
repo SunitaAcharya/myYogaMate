@@ -1,7 +1,7 @@
 # myYogaMate
 <br/>
 <p align="center">
-<img src="https://github.com/SunitaAcharya/myYogaMate/blob/main/image/logo.png" width="400" height="350">
+<img src="./image/logo.png" width="400" height="350">
   </p>
 <br/>
 
