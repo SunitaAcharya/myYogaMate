@@ -31,6 +31,7 @@
 ### About the Project
 My Yoga Mate - MYM , is a project built by postgraduate students of University of Glasgow. MYM detects human posture doing yoga and compares it with the stored original image and state the user whether the pose is correct or not. We have build this project in C++ language and used Tensorflow libaries to find the key points of hunan pose estimation and posture angle. This will be a great use for people who do yoga on a daily basis where they can get a guidance for correct posture of a human doing a particular yoag pose. We can extend our project and make an app for this so that it will be easy and convinient for everyone to use it daily.
 
+<bold>Our Github Page link : https://sunitaacharya.github.io/myYogaMate/ </bold>
 ### Requirements
 Hardware 
 * Linux Laptop/ Ubuntu dual setup in Windows Laptop
@@ -76,30 +77,35 @@ make    #to compile program
 5. Press "," or "." to resize webcam window
 
 ### Code Structure
-* image_helper.cpp
-* image_processor.cpp
-* image_show.cpp
-* pose_engine.cpp
+* image_helper.cpp - 
+* image_processor.cpp - Image processor can compare the pose of user with image. It includes the functions of initialisation, angle calculation and comparison, and drawing of joint points and lines.
+* image_show.cpp - it shows image and camera at the same time.
+* pose_engine.cpp - tensor flow techniques are implemented here which is included in all the other files for analysing and calculation.
 
 ### Workflow
 <p align="center">
 <img src="./image/workflow.png" width="1300" height="600">
   </p>
-
+There are four windows which are yoga pose menu, selected yoga pose, webcam and description window. Each window depicts different functionalities. In first window, yoga pose 
+menu window where all yoga images is shown which gives user to choose their desired image by pressing number keys (1 to 6). After selecting desired image, the algorithm image_show() runs which calculate human key points and angles from image. Simultaneously, image window (second window) and webcam (third window) opens up where it will capture the cordinates of human posing infront of webcam in real-time and then compare it with the angles of the image chosen and image captured from webcam. If all the angles are same then it will show the pose is correct and pose is incorrect otherwise. We have also added a new feature which is in the fourth window, description window which is a guide for the user who is imitating yoga pose.
 
 ### Implementation
 <p align="center">
 <img src="./image/demoGif.gif" width="800" height="400">
   </p>
 
+image_show() function is used which analyses the image choosen from menu then calculate key points and angle.
+camera_show() function is used basically analysing the pose from webcam then calculate keypoints and angle which will then used while comparing the angles of both the images in realtime.
+
 ### Results
 <p align="center">
 <img src="./image/incorrectPose1.png" width="800" height="400">
   </p>
-  
+Here while comaparing both the angles , when the angles doe not match with eachother it shows red line on that particular part which means the pose of that part is not correct. Hence the pose is incorrect.
   <p align="center">
 <img src="./image/correctPose1.png" width="800" height="400">
   </p>
+In this image all the part of the human pose is showing green which means all the angles are matched and hence the pose is correct.
 
 ### License
 Copyright 2022 UofG_rtep_team4<br/>
