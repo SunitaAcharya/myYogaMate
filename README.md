@@ -22,6 +22,7 @@
 * [Code Structure](#code-structure)
 * [Workflow](workflow)
 * [Implementation](#implementation)
+* [Results](#results)
 * [License](#license)
 * [Authors](#authors)
 * [Social Media](#social-media)
@@ -81,9 +82,23 @@ make    #to compile program
 * pose_engine.cpp
 
 ### Workflow
-
+<p align="center">
+<img src="https://github.com/SunitaAcharya/myYogaMate/blob/main/image/workflow.png" width="1300" height="600">
+  </p>
+  
 ### Implementation
+<p align="center">
+<img src="https://github.com/SunitaAcharya/myYogaMate/blob/main/image/demoGif.gif" width="800" height="400">
+  </p>
 
+### Results
+<p align="center">
+<img src="https://github.com/SunitaAcharya/myYogaMate/blob/main/image/incorrectPose1.png" width="800" height="400">
+  </p>
+  
+  <p align="center">
+<img src="https://github.com/SunitaAcharya/myYogaMate/blob/main/image/correctPose1.png" width="800" height="400">
+  </p>
 
 ### License
 Copyright 2022 UofG_rtep_team4<br/>
