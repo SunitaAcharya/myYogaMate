@@ -70,8 +70,8 @@ make    #to compile program
 ### Guide
 1. Run the above commands to download our source code and build it
 2. Press any key to start the program
-3. Select 1,2 ,3,4,5,6 to select image
-4. Press q to exit
+3. Select 1, 2 ,3, 4, 5, 6 to select image
+4. Press “q” to exit
 5. Press "," or "." to resize webcam window
 
 ### Code Structure
