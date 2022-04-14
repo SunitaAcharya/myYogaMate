@@ -20,9 +20,6 @@
 * [Requirements](#requirements)
 * [Guide](#guide)
 * [Code Structure](#code-structure)
-* [Workflow](workflow)
-* [Implementation](#implementation)
-* [Results](#results)
 * [License](#license)
 * [Authors](#authors)
 * [Social Media](#social-media)
@@ -82,30 +79,12 @@ make    #to compile program
 * image_show.cpp - it shows image and camera at the same time.
 * pose_engine.cpp - tensor flow techniques are implemented here which is included in all the other files for analysing and calculation.
 
-### Workflow
-<p align="center">
-<img src="./image/workflow.png" width="1300" height="600">
-  </p>
-There are four windows which are yoga pose menu, selected yoga pose, webcam and description window. Each window depicts different functionalities. In first window, yoga pose 
-menu window where all yoga images is shown which gives user to choose their desired image by pressing number keys (1 to 6). After selecting desired image, the algorithm image_show() runs which calculate human key points and angles from image. Simultaneously, image window (second window) and webcam (third window) opens up where it will capture the cordinates of human posing infront of webcam in real-time and then compare it with the angles of the image chosen and image captured from webcam. If all the angles are same then it will show the pose is correct and pose is incorrect otherwise. We have also added a new feature which is in the fourth window, description window which is a guide for the user who is imitating yoga pose.
-
-### Implementation
 <p align="center">
 <img src="./image/demoGif.gif" width="800" height="400">
   </p>
 
 image_show() function is used which analyses the image choosen from menu then calculate key points and angle.
 camera_show() function is used basically analysing the pose from webcam then calculate keypoints and angle which will then used while comparing the angles of both the images in realtime.
-
-### Results
-<p align="center">
-<img src="./image/incorrectPose1.png" width="800" height="400">
-  </p>
-Here while comaparing both the angles , when the angles doe not match with eachother it shows red line on that particular part which means the pose of that part is not correct. Hence the pose is incorrect.
-  <p align="center">
-<img src="./image/correctPose1.png" width="800" height="400">
-  </p>
-In this image all the part of the human pose is showing green which means all the angles are matched and hence the pose is correct.
 
 ### License
 Copyright 2022 UofG_rtep_team4<br/>
