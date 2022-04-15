@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -fopenmp -O2 -DNDEBUG  -rdynamic CMakeFiles/ImageProcessorTest.dir/test_image_processor.cpp.o  -o ImageProcessorTest 
