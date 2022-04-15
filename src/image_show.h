@@ -42,7 +42,6 @@ class image_show
     private:
         static std::string m_input_name_img;
         std::vector<cv::Mat> imageVector; // mat variable used in multipleImage and homepage functions
-        int MAX_PIXEL;
 
         std::thread* imgThread = nullptr; // define a thread pointer for start and stop the application
         int running = 0;
@@ -74,23 +73,9 @@ class image_show
      * All the images will show on one home page for users to select at first.
      * 
     */
-        void multipleImage(std::vector<cv::Mat> imgVector, cv::Mat& dst, int imgCols);
+        void multipleImage(std::vector<cv::Mat> imgVector, cv::Mat& dst, int imgCols, int pixel);
         void homepage();
-        
-    /**
-     * @brief Settors for setting value function for variable MAX_PIXEL in ptivate
-     * Gettors for getting value function for return variable MAX_PIXEL
-     * 
-    */
-        void setMAX(int run) // set value function for variable MAX_PIXEL
-        {
-            MAX_PIXEL=run;
-        }
-        int getMAX()
-        {
-            return MAX_PIXEL;
-        }
-        
+
     /**
      * @brief Callback function for main code to call image_show function.
      * Define the start and stop functions for starting and stoping the application.
