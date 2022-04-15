@@ -26,6 +26,8 @@ target_link_libraries(${ProjectName} ${OpenCV_LIBS})
 file(COPY ${CMAKE_CURRENT_LIST_DIR}/resource DESTINATION ${CMAKE_BINARY_DIR}/)
 add_definitions(-DRESOURCE_DIR="${CMAKE_BINARY_DIR}/resource/")
 
-#add_subdirectory (test)
-#enable_testing ()
-#add_test (NAME MyTest COMMAND Test)
+#UnitTest
+include(CTest)
+enable_testing ()
+add_subdirectory (test)
+
