@@ -1,6 +1,6 @@
 /**
 *@file image_show.cpp
-*@brief image show and camera show functions 
+*@brief implementation of functions from image_show and camera_show classes 
 *
 *MIT License
 *
