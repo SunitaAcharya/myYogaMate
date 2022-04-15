@@ -1,73 +1,91 @@
+/**
+*@file image_processor.cpp
+*@brief helper functions about each analyzing images steps
+*
+*MIT License
+*
+*Copyright (c) 2022 SunitaAcharya
+*
+*/
+
 #include <iostream>
 #include <string>
-#include <chrono> //
+#include <chrono>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
-
 #include "image_helper.h"
 #include "image_processor.h"
 
 #define DEFAULT_IMAGE_PATH_IMAGEHELPER            RESOURCE_DIR
 
-extern int BOOL[8];
 /***** static variables from image_helper class *****/
 std::string key::image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose1.jpg";
 double image_helper::zoomsize = 1.0;
 
-
 int image_check::source_check(const std::string& input_name,cv::VideoCapture& cap)
 {
-	if (input_name.find(".jpg") != std::string::npos || input_name.find(".png") != std::string::npos) // read image ("string::npos" means not found)
+    /*** read image, check the image type and read image ("string::npos" means not found) ***/
+	if (input_name.find(".jpg") != std::string::npos || input_name.find(".png") != std::string::npos) 
     {
-    	//cv::Mat img;
     	img = cv::imread(input_name);
-    	if(img.empty())
+    	if(img.empty()) // check if image read corrctly
     	{
     		std::cout << "Input source NOT found !!";
-    		return 0;
+    		return -1;
     	}
-    }   
-    else // read from camera
-    {
-        //int cam_id = -1;       
-        cam_id = stoi(input_name); // stoi : Convert string to integer, directly check the number in this string
-        
-        if(cam_id>=0)
-        {
-            cap=cv::VideoCapture(cam_id);
-        }
         else
         {
-            cap=cv::VideoCapture(input_name);
-        } 
-        
-        if (!cap.isOpened()) // Check if the camera is open successfully
-        {
-            std::cout<<"Open camera FAIL !! ";
             return 0;
         }
     }
-    return 0;
+    else
+    {   
+
+        cam_id = stoi(input_name); // stoi : Convert string to integer, directly check the number in this string
+
+        if(cam_id >= 0)
+        {
+            cap=cv::VideoCapture(cam_id);
+            if (!cap.isOpened()) // Check if the camera is open successfully
+            {
+                std::cout<<" Open camera FAIL !! ";
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }  
+        }
+        else
+        {
+            return -1;
+        }
+        
+                  
+    }
+
 }
 
-bool key::key_check(cv::VideoCapture& cap)
+/***** check the users command(key) for changing the image or stop the application ****/
+bool key::key_check(cv::VideoCapture& cap) 
 {
     int32_t key=cv::waitKey(1)&0xff;
     bool ret_to_quit = false;
+
         switch (key) 
         {
-        case 'q':
+        case 'q': // stop the application
             cap.release();
             ret_to_quit = true;
             break;
 
-        case '1':
+        case '1': // refer to image 1
             cap.release();
             image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose1.jpg";
             ret_to_quit = false;
             break;
         
-        case '2':
+        case '2': // refer to image 2
             cap.release();
             image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose2.jpg";
             ret_to_quit = false;
@@ -95,12 +113,12 @@ bool key::key_check(cv::VideoCapture& cap)
             image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose6.jpg";
             ret_to_quit = false;
             break;
-        case ',':
+        case ',': // resize the window size
             if(image_helper::zoomsize > 0.21) image_helper::zoomsize = image_helper::zoomsize - 0.2;
             else std::cout << "The size is too small" << std::endl;
             ret_to_quit = false;
             break;
-        case '.':
+        case '.': // resize the window size
             if(image_helper::zoomsize < 5) image_helper::zoomsize = image_helper::zoomsize + 0.2;
             else std::cout << "The size is too large" << std::endl;
             ret_to_quit = false;
@@ -112,10 +130,10 @@ bool key::key_check(cv::VideoCapture& cap)
 
 std::string key::get_img_name(void)
 {  
-    return image_input_name;
+    return image_input_name; // return image source path when users change the image
 }
 
-/***** function cv_FPS, show FPS in images *****/
+/***** function cv_FPS, show FPS in camera window *****/
 void image_helper::cv_FPS(cv::Mat& mat) 
 {
     /***** initialise *****/
@@ -125,15 +143,15 @@ void image_helper::cv_FPS(cv::Mat& mat)
     }  
     else m_mat = mat;
     
-    /***** calculate FPS *****/
+    /***** records the time and calculate FPS *****/
     static auto time1 = std::chrono::steady_clock::now();
     auto time2 = std::chrono::steady_clock::now();
-    fps = 1e9 / (time2 - time1).count();
+    fps = 1e9 / (time2 - time1).count(); // calculate FPS
     time1 = time2;
     fps_result = "FPS: " + std::to_string(fps);
 
     /***** process image *****/
-    /***** show FPS *****/
+    /***** show FPS result on the camera window *****/
     cv::putText(m_mat, fps_result, cv::Point(2,15), cv::FONT_HERSHEY_SIMPLEX,0.5, cv::Scalar (0,0,0), 2, 8); 
     
 }
@@ -141,12 +159,13 @@ void image_helper::cv_FPS(cv::Mat& mat)
 /***** function pose_alert, show pose information such as pose correct or pose incorrect in images *****/
 void image_helper::pose_alert(cv::Mat& mat)
 {
-    int posecorrect[8] = {0,0,0,0,0,0,0,0};
+    int posecorrect[8] = {0,0,0,0,0,0,0,0}; // initialize the variables
     int count = 0;
-    bool arraysEqual = true;
+    bool arraysEqual = true; 
+
     while (arraysEqual && count < 8)
     {
-        if (ImageProcessor_Process::angle_check[count] != posecorrect[count])
+        if (ImageProcessor_Process::angle_check[count] != posecorrect[count]) // check if users' pose is correct
             arraysEqual = false;
         count++;
     }
@@ -166,10 +185,10 @@ void image_helper::cv_resize(cv::Mat& mat)
     /***** set window size *****/
     if (mat.empty() == 1)
     {
-        std::cout << "The input image is empty" << std::endl;
+        std::cout << "The input image is empty" << std::endl; // check image
     }  
     else m_mat = mat;
-    cv::resize(mat, mat, cv::Size(), zoomsize, zoomsize);
+    cv::resize(mat, mat, cv::Size(), zoomsize, zoomsize); // resize the window
 }
 
 /***** function cv_resize, resize window (overload) *****/
@@ -182,10 +201,9 @@ void image_helper::cv_resize(cv::Mat& mat, double ratio)
     }  
     else m_mat = mat;
     cv::resize(mat, mat, cv::Size(), ratio, ratio);
-
 }
 
-/***** function cv_flip, flip the images *****/
+/***** function cv_flip, flip the images and camera *****/
 void image_helper::cv_flip(cv::Mat& mat)
 {
     if (mat.empty() == 1)
