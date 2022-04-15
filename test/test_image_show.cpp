@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE(camera_showTest)
 BOOST_AUTO_TEST_CASE(Incorrectcam_id)
 {
-  //BOOST_CHECK_EQUAL(cam_process_test.cam_process("-1"),0);
+  BOOST_CHECK_EQUAL(cam_process_test.cam_process("-1"),0);
 }
 BOOST_AUTO_TEST_CASE(Correctcam_id)
 {
