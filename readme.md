@@ -53,6 +53,7 @@ $ git submodule update --init --recursive --remote
 ```
 To download pre-build libararies
 ```sh
+$ cd InferenceHelper/
 $ sh third_party/download_prebuilt_libraries.sh
 ```
 <br/>
