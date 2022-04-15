@@ -240,7 +240,7 @@ void image_show::homepage()
     imageVector.push_back(image6);
 
     /***** set the window parameters*****/
-    multipleImage(imageVector, dst, 3);
+    multipleImage(imageVector, dst, 3, 600);
 
     /***** set image window *****/
     cv::namedWindow("My Yoga Mate");
