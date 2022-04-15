@@ -31,3 +31,4 @@ add_test(ImageHelperTest FirstTest)
 add_test(ImageProcessorTest SecondTest)
 add_test(ImageShowTest ThirdTest)
 
+add_definitions(-DRESOURCE_DIR="${CMAKE_BINARY_DIR}/resource/")
