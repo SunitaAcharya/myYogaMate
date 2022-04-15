@@ -38,10 +38,10 @@ int32_t camera_show::cam_process (std::string Webcam_id)
     cv::VideoCapture cap; 
 
     /***** create image_helper instance and check webcam id *****/
-    image_check check_source;  
+    image_check check_source; // create check_shorce object
     int check = check_source.source_check(m_input_name_cam,cap);
 
-    if(check == (-1)) // check if the image source read successfully
+    if(check == (-1)) // check if the camera source read successfully
     {
         return -1;
     }
@@ -121,7 +121,7 @@ int32_t image_show::img_process (std::string Source_path)
    
     /***** create image instance, check image format *****/
     cv::VideoCapture cap;
-    image_check source_check_img;
+    image_check source_check_img; // create check_shorce object
     int check = source_check_img.source_check(m_input_name_img,cap);
     if(check == (-1)) // check if the image source read successfully
     {
