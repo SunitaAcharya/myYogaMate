@@ -43,8 +43,13 @@ int image_check::source_check(const std::string& input_name,cv::VideoCapture& ca
     }
     else
     {
+        if ((input_name.find(".gif") != std::string::npos) || (input_name.find(".tif") != std::string::npos) || (input_name.find(".psd") != std::string::npos))
+        {
+            return -1;
+        }   
+
         cam_id = stoi(input_name); // stoi : Convert string to integer, directly check the number in this string
-        
+
         if(cam_id >= 0)
         {
             cap=cv::VideoCapture(cam_id);
@@ -58,11 +63,11 @@ int image_check::source_check(const std::string& input_name,cv::VideoCapture& ca
                 return 0;
             }  
         }
-        else if ((input_name.find(".jpg") == std::string::npos) && (input_name.find(".png") == std::string::npos) && (cam_id < 0))
+        else
         {
             return -1;
-        }
-               
+        }    
+                  
     }
 }
 
