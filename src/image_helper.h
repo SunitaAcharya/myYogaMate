@@ -1,6 +1,6 @@
 /**
 *@file image_helper.h
-*@brief helper functions about each analyzing images steps
+*@brief functions for helping other files to analyze image poses
 *
 *MIT License
 *
