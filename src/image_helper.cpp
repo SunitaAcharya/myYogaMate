@@ -218,3 +218,68 @@ void image_helper::cv_flip(cv::Mat& mat)
     cv::flip(m_mat, m_mat, 1);
 }
 
+/***** function cv_comment: add tips in images, detect key press and change tips *****/
+void image_helper::cv_comment(cv::Mat& mat)
+{
+    
+    if (key::image_input_name == DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose1.jpg")
+    { 
+        cv::putText(mat, tips.image1_comment1, cv::Point(0,595), cv::FONT_HERSHEY_SIMPLEX,1.2, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image1_comment2, cv::Point(0,645), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image1_comment3, cv::Point(0,685), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image1_comment4, cv::Point(0,725), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image1_comment5, cv::Point(0,765), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image1_comment6, cv::Point(0,805), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image1_comment7, cv::Point(0,845), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+    }
+    else if (key::image_input_name == DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose2.jpg")
+    {
+        cv::putText(mat, tips.image2_comment1, cv::Point(0,595), cv::FONT_HERSHEY_SIMPLEX,1.2, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image2_comment2, cv::Point(0,645), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image2_comment3, cv::Point(0,685), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image2_comment4, cv::Point(0,725), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image2_comment5, cv::Point(0,765), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        //cv::putText(mat, tips.image2_comment6, cv::Scalar (0,128,128), 2, 12);
+        //cv::putText(mat, tips.image2_comment7, cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+    }
+    else if (key::image_input_name == DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose3.jpg")
+    {
+        cv::putText(mat, tips.image3_comment1, cv::Point(0,595), cv::FONT_HERSHEY_SIMPLEX,1.2, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image3_comment2, cv::Point(0,645), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image3_comment3, cv::Point(0,685), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image3_comment4, cv::Point(0,725), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image3_comment5, cv::Point(0,765), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        //cv::putText(mat, tips.image3_comment6, cv::Point(0,805), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        //cv::putText(mat, tips.image3_comment7, cv::Point(0,845), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+    }
+    else if (key::image_input_name == DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose4.jpg")
+    {
+        cv::putText(mat, tips.image4_comment1, cv::Point(0,595), cv::FONT_HERSHEY_SIMPLEX,1.2, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image4_comment2, cv::Point(0,645), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image4_comment3, cv::Point(0,685), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image4_comment4, cv::Point(0,725), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image4_comment5, cv::Point(0,765), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        //cv::putText(mat, tips.image4_comment6, cv::Point(0,805), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        //cv::putText(mat, tips.image4_comment7, cv::Point(0,845), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+    }
+    else if (key::image_input_name == DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose5.jpg")
+    {
+        cv::putText(mat, tips.image5_comment1, cv::Point(0,595), cv::FONT_HERSHEY_SIMPLEX,1.2, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image5_comment2, cv::Point(0,645), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image5_comment3, cv::Point(0,685), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image5_comment4, cv::Point(0,725), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image5_comment5, cv::Point(0,765), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image5_comment6, cv::Point(0,805), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image5_comment7, cv::Point(0,845), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+    }
+    else if (key::image_input_name == DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose6.jpg")
+    {
+        cv::putText(mat, tips.image6_comment1, cv::Point(0,595), cv::FONT_HERSHEY_SIMPLEX,1.2, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image6_comment2, cv::Point(0,645), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image6_comment3, cv::Point(0,685), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image6_comment4, cv::Point(0,725), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image6_comment5, cv::Point(0,765), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image6_comment6, cv::Point(0,805), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+        cv::putText(mat, tips.image6_comment7, cv::Point(0,845), cv::FONT_HERSHEY_SIMPLEX,1, cv::Scalar (0,128,128), 2, 12);
+    }
+}
