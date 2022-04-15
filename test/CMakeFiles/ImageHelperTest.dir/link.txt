@@ -1,1 +1,0 @@
-/usr/bin/c++  -Wall -fopenmp -O2 -DNDEBUG  -rdynamic CMakeFiles/ImageHelperTest.dir/test_image_helper.cpp.o  -o ImageHelperTest 
