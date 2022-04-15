@@ -125,7 +125,7 @@ private:
     double m_zoom;
     double fps;
     std::string fps_result;
-
+    tips_settings tips;
 
 public:
     
