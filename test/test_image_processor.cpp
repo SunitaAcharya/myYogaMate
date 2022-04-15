@@ -7,9 +7,11 @@
 #include "../src/image_processor.h"
 #include <opencv2/opencv.hpp>
 
+#define TEST_FILE_PATH   RESOURCE_DIR
+
 ImageProcessor_Initialize::InputParam input;
 ImageProcessor_Initialize initialize_test;
-char WORK_DIR[]="/home/shujun/Downloads/1_1/test/New-demo-video.gif";
+char WORK_DIR[]=TEST_FILE_PATH "New-demo-video.gif";
 ImageProcessor_Finalize finalize_test;
 ImageProcessor_Process process_test;
 cv::Mat test_mat;
