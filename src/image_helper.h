@@ -155,6 +155,7 @@ public:
     void cv_resize(cv::Mat& mat); // overload for webcam window
     void cv_resize(cv::Mat& mat, double ratio); //overload for fixed image window
     void cv_flip(cv::Mat& mat);
+    void cv_comment(cv::Mat& mat);
 
 };
 
