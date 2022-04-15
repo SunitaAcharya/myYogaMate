@@ -45,6 +45,11 @@ int32_t camera_show::cam_process (std::string Webcam_id)
     {
         return -1;
     }
+    else
+    {
+        return 0;
+    }
+
     cv::VideoWriter writer; // creating writer
 
     // Initializing the camera process   
@@ -53,6 +58,10 @@ int32_t camera_show::cam_process (std::string Webcam_id)
     {
         std::cout<< "Initialization Error" << std::endl;
         return -1;
+    }
+    else
+    {
+        return 0;
     }
 
     /***** Output each frame reading from camera *****/
@@ -127,6 +136,10 @@ int32_t image_show::img_process (std::string Source_path)
     {
         return -1;
     }
+    else
+    {
+        return 0;
+    }
     
     cv::VideoWriter writer; // create writer
 
@@ -136,6 +149,10 @@ int32_t image_show::img_process (std::string Source_path)
     {
         std::cout<< "Initialization Error" << std::endl;
         return -1;
+    }
+    else
+    {
+        return 0;
     }
 
     /***** add lines in images *****/
