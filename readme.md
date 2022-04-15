@@ -75,17 +75,17 @@ make    #to compile program
 5. Press "," or "." to resize webcam window
 
 ### Code Structure
-* image_helper.cpp - It includes all the functions that can help the image_processor and image_show to analyze  and show the image window and camera window. 
-* image_processor.cpp - Image processor can compare the pose of user with image. It includes the functions of initialisation, angle calculation and comparison, and drawing of joint points and lines.
-* image_show.cpp - it shows homepage, image window, and camera window at the same time.
-* pose_engine.cpp - tensor flow techniques are implemented here which is included in all the other files for analysing and calculation.
+* image_helper.cpp: It includes all the functions that can help the image_processor and image_show to implement their functions. For example, checking the image type, detecting the key presssed by users, resizing output windows, and showing remainder statement.
+* image_processor.cpp: Image processor can compare the pose of user with image. It includes the functions of initialisation, angle calculation and comparison, and drawing of joint points and lines.
+* image_show.cpp: It focuses on showing the homepage, image window, and camera window at the same time.
+* pose_engine.cpp: Tensor flow techniques are implemented here which is included in all the other files for analysing and calculation.
 
 <p align="center">
 <img src="./image/demoGif.gif" width="800" height="400">
   </p>
 
-image_show() function is used which analyses the image choosen from menu then calculate key points and angle.
-camera_show() function is used basically analysing the pose from webcam then calculate keypoints and angle which will then used while comparing the angles of both the images in realtime.
+image_show() function is used to read and analyse the image choosen from menu. Also, it calculates the angles.
+camera_show() function is used to analyse the pose from webcam. It then calculates the angles which will used while comparing the angles of both the images and camera in realtime.
 
 ### License
 Copyright 2022 UofG_rtep_team4<br/>
