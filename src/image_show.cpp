@@ -20,30 +20,34 @@
 #define WORK_DIR                      RESOURCE_DIR
 #define LOOP_NUM_FOR_TIME_MEASUREMENT 10
 
-/** static variables from image_show and camera_show class *****/
+/***** static variables from image_show class *****/
 bool camera_show::key_status = 0;
 std::string camera_show::m_input_name_cam;
 std::string image_show::m_input_name_img;
 int camera_show::Thread_num;
 std::mutex mtx;
 
-/***** cam_process function aims to read and analyse the images from webcam *****/
+/***** cam_process function aims to process images from webcam *****/
 int32_t camera_show::cam_process (std::string Webcam_id)
 {
-    mtx.lock(); // lock the thread
+    mtx.lock(); // lock
 
     camera_show::Thread_num = 1; // thread number 1 is for webcam thread
     m_input_name_cam = Webcam_id; // assign webcam number for variable m_input_name_cam
 
     cv::VideoCapture cap; 
 
-    /***** creating image_helper object and checking webcam id *****/
-    image_check check_source;
-    check_source.source_check(m_input_name_cam,cap);
+    /***** create image_helper instance and check webcam id *****/
+    image_check check_source;  
+    int check = check_source.source_check(m_input_name_cam,cap);
 
+    if(check == (-1)) // check if the image source read successfully
+    {
+        return -1;
+    }
     cv::VideoWriter writer; // creating writer
-    
-    // Initializing the camera process
+
+    // Initializing the camera process   
     ImageProcessor_Initialize::InputParam input_param = { WORK_DIR, 2 };
     if (ImageProcessor_Initialize::Initialize(input_param) != 0) 
     {
@@ -51,7 +55,7 @@ int32_t camera_show::cam_process (std::string Webcam_id)
         return -1;
     }
 
-    /***** Output each frame reading from camera *****/    
+    /***** Output each frame reading from camera *****/
     for (frame_cnt = 0; cap.isOpened() || frame_cnt < LOOP_NUM_FOR_TIME_MEASUREMENT; frame_cnt++) 
     {
         cv::Mat image;
@@ -79,7 +83,7 @@ int32_t camera_show::cam_process (std::string Webcam_id)
         if (writer.isOpened()) writer.write(image);
         cv::imshow("Webcam", image); // show images
 
-        /***** create image_helper object and check the pressed key by users *****/
+        /***** create image_helper instance and check the pressed key *****/
         if (cap.isOpened()) 
         {
             key Keycheck;
@@ -93,18 +97,19 @@ int32_t camera_show::cam_process (std::string Webcam_id)
 
     /***** finalize image process *****/
     ImageProcessor_Finalize::Finalize();
-    if (writer.isOpened()) writer.release(); 
+    if (writer.isOpened()) writer.release();
 
     mtx.unlock(); // unlock the thread
     return 0;    
 }
 
-/***** img_process function aims to read and analyse the images from the specific source *****/
+
+/***** img_process function aims to process images from picture *****/
 int32_t image_show::img_process (std::string Source_path)
 {
     mtx.lock(); // lock the thread
 
-    camera_show::Thread_num = 2; // thread number 2 is for showing image 
+    camera_show::Thread_num = 2;  // thread number 2 is for showing image 
 
     /***** change image source *****/
     key img;
@@ -114,11 +119,15 @@ int32_t image_show::img_process (std::string Source_path)
     }
     else m_input_name_img = img.get_img_name(); // change the image source if the user wants to change the image
    
-    /***** creating image_check object and checking image format *****/
+    /***** create image instance, check image format *****/
     cv::VideoCapture cap;
     image_check source_check_img;
-    source_check_img.source_check(m_input_name_img,cap);
-
+    int check = source_check_img.source_check(m_input_name_img,cap);
+    if(check == (-1)) // check if the image source read successfully
+    {
+        return -1;
+    }
+    
     cv::VideoWriter writer; // create writer
 
     // Initializing the image process
@@ -143,42 +152,47 @@ int32_t image_show::img_process (std::string Source_path)
     ImageProcessor_Process imgpro;
     imgpro.Process(image); // Analysing the image pose
 
-    /***** set image cv parameters, resize and flip the image windows *****/
+    /***** set image cv parameters, resize and flip *****/
     image_helper img_cv_set;
     img_cv_set.cv_flip(image);
     img_cv_set.cv_resize(image, 0.3);
 
+    /***** show images *****/
     if (writer.isOpened()) writer.write(image);
     cv::imshow("Image show", image); // show images
 
     /***** finalize image process *****/
     ImageProcessor_Finalize::Finalize();
     if (writer.isOpened()) writer.release();
-
-    camera_show::Thread_num=0;
+    
+    camera_show::Thread_num=0; 
     mtx.unlock(); // before return 0;
     return 0;   
 }
 
 /***** multiple images are shown in one windows *****/
+/***** set parameters for the images *****/
 void image_show::multipleImage(std::vector<cv::Mat> imgVector, cv::Mat& dst, int imgCols) 
 {
+    /***** set max pixel for every images *****/
     image_show img;
     img.setMAX(600); // set values for MAX_PIXEL
 
     int imgNum = imgVector.size();
-
-    cv::Size imgOriSize = imgVector[0].size(); // set the longest side and resize to 600 pixel
+    /***** set the longest side and resize to 600 pixel *****/
+    cv::Size imgOriSize = imgVector[0].size();
     int imgMaxPixel = std::max(imgOriSize.height, imgOriSize.width);
 
-    double prop = imgMaxPixel < img.getMAX() ?  (double)imgMaxPixel/img.getMAX() : img.getMAX()/(double)imgMaxPixel; // get ratio of the max pixel
+    /***** get ratio of the max pixel *****/
+    double prop = imgMaxPixel < MAX_PIXEL ?  (double)imgMaxPixel/MAX_PIXEL : MAX_PIXEL/(double)imgMaxPixel;
 
-    cv::Size imgStdSize(imgOriSize.width * prop, imgOriSize.height * prop); // show the fixed size of images
+    /***** show the fixed size of images *****/
+    cv::Size imgStdSize(imgOriSize.width * prop, imgOriSize.height * prop);
 
     /***** standard image *****/
     cv::Mat imgStd;
-
-    cv::Point2i location(0, 0); // start from (0,0) coordinate
+    /***** start from (0,0) coordinate *****/
+    cv::Point2i location(0, 0);
 
     /***** create image window *****/
     cv::Mat imgWindow(imgStdSize.height*((imgNum-1)/imgCols + 1), imgStdSize.width*imgCols, imgVector[0].type());
@@ -195,7 +209,7 @@ void image_show::multipleImage(std::vector<cv::Mat> imgVector, cv::Mat& dst, int
 /***** define the home page for application and set paths of each images *****/
 void image_show::homepage()
 {
-    /***** read images *****/
+    /***** create images *****/
     cv::Mat image1 = cv::imread(WORK_DIR "yogapose1.jpg");
     cv::Mat image2 = cv::imread(WORK_DIR "yogapose2.jpg");
     cv::Mat image3 = cv::imread(WORK_DIR "yogapose3.jpg");
@@ -203,7 +217,6 @@ void image_show::homepage()
     cv::Mat image5 = cv::imread(WORK_DIR "yogapose5.jpg");
     cv::Mat image6 = cv::imread(WORK_DIR "yogapose6.jpg");
     cv::Mat dst;
-
     /***** flip all images *****/
     image_helper flipimage;
     flipimage.cv_flip(image1);
@@ -220,7 +233,7 @@ void image_show::homepage()
     imageVector.push_back(image5);
     imageVector.push_back(image6);
 
-    /***** set the window parameters *****/
+    /***** set the window parameters*****/
     multipleImage(imageVector, dst, 3);
 
     /***** set image window *****/
@@ -245,10 +258,9 @@ void image_show::run()
     /***** set parameters and initialize them *****/
     std::string cam_path = "0";
     std::string img_path = WORK_DIR "yogapose1.jpg";
-
     running = 1;
 
-    /***** show homepage and wait any key press from users to start the application *****/
+    /***** show homepage any key press from users to start the application *****/
     image_show homepage_show;
     homepage_show.homepage();
 
@@ -272,7 +284,6 @@ void image_show::run()
 void image_show::start()
 {
     std::cout << "image start \n";
-
     if(nullptr != imgThread) // create thread
     {
         std::cout << "thread issue \n";
@@ -284,7 +295,6 @@ void image_show::start()
 void image_show::stop()
 {
     running = 0; // stop the application after running the application
-
     if(nullptr != imgThread)
     {
         imgThread->join();

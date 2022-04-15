@@ -10,17 +10,20 @@
 
 #include <iostream>
 #include <string>
-#include <chrono>
+#include <chrono> 
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
+
 #include "image_helper.h"
 #include "image_processor.h"
 
 #define DEFAULT_IMAGE_PATH_IMAGEHELPER            RESOURCE_DIR
 
+extern int BOOL[8];
 /***** static variables from image_helper class *****/
 std::string key::image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose1.jpg";
 double image_helper::zoomsize = 1.0;
+
 
 int image_check::source_check(const std::string& input_name,cv::VideoCapture& cap)
 {
@@ -39,7 +42,11 @@ int image_check::source_check(const std::string& input_name,cv::VideoCapture& ca
         }
     }
     else
-    {   
+    {
+        if ((input_name.find(".gif") != std::string::npos) || (input_name.find(".tif") != std::string::npos) || (input_name.find(".psd") != std::string::npos))
+        {
+            return -1;
+        }   
 
         cam_id = stoi(input_name); // stoi : Convert string to integer, directly check the number in this string
 
@@ -59,19 +66,16 @@ int image_check::source_check(const std::string& input_name,cv::VideoCapture& ca
         else
         {
             return -1;
-        }
-        
+        }    
                   
     }
-
 }
 
 /***** check the users command(key) for changing the image or stop the application ****/
-bool key::key_check(cv::VideoCapture& cap) 
+bool key::key_check(cv::VideoCapture& cap)
 {
     int32_t key=cv::waitKey(1)&0xff;
     bool ret_to_quit = false;
-
         switch (key) 
         {
         case 'q': // stop the application
@@ -118,7 +122,7 @@ bool key::key_check(cv::VideoCapture& cap)
             else std::cout << "The size is too small" << std::endl;
             ret_to_quit = false;
             break;
-        case '.': // resize the window size
+        case '.':
             if(image_helper::zoomsize < 5) image_helper::zoomsize = image_helper::zoomsize + 0.2;
             else std::cout << "The size is too large" << std::endl;
             ret_to_quit = false;
@@ -133,7 +137,7 @@ std::string key::get_img_name(void)
     return image_input_name; // return image source path when users change the image
 }
 
-/***** function cv_FPS, show FPS in camera window *****/
+/***** function cv_FPS, show FPS in images *****/
 void image_helper::cv_FPS(cv::Mat& mat) 
 {
     /***** initialise *****/
@@ -143,15 +147,15 @@ void image_helper::cv_FPS(cv::Mat& mat)
     }  
     else m_mat = mat;
     
-    /***** records the time and calculate FPS *****/
+    /***** calculate FPS *****/
     static auto time1 = std::chrono::steady_clock::now();
     auto time2 = std::chrono::steady_clock::now();
-    fps = 1e9 / (time2 - time1).count(); // calculate FPS
+    fps = 1e9 / (time2 - time1).count();
     time1 = time2;
     fps_result = "FPS: " + std::to_string(fps);
 
     /***** process image *****/
-    /***** show FPS result on the camera window *****/
+    /***** show FPS result on the camera window  *****/
     cv::putText(m_mat, fps_result, cv::Point(2,15), cv::FONT_HERSHEY_SIMPLEX,0.5, cv::Scalar (0,0,0), 2, 8); 
     
 }
@@ -161,11 +165,10 @@ void image_helper::pose_alert(cv::Mat& mat)
 {
     int posecorrect[8] = {0,0,0,0,0,0,0,0}; // initialize the variables
     int count = 0;
-    bool arraysEqual = true; 
-
+    bool arraysEqual = true;
     while (arraysEqual && count < 8)
     {
-        if (ImageProcessor_Process::angle_check[count] != posecorrect[count]) // check if users' pose is correct
+        if (ImageProcessor_Process::angle_check[count] != posecorrect[count])
             arraysEqual = false;
         count++;
     }
@@ -201,9 +204,10 @@ void image_helper::cv_resize(cv::Mat& mat, double ratio)
     }  
     else m_mat = mat;
     cv::resize(mat, mat, cv::Size(), ratio, ratio);
+
 }
 
-/***** function cv_flip, flip the images and camera *****/
+/***** function cv_flip, flip the images *****/
 void image_helper::cv_flip(cv::Mat& mat)
 {
     if (mat.empty() == 1)
