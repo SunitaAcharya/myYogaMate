@@ -154,8 +154,15 @@ int32_t image_show::img_process (std::string Source_path)
 
     /***** set image cv parameters, resize and flip *****/
     image_helper img_cv_set;
+    image_helper white_cv_set;
     img_cv_set.cv_flip(image);
-    img_cv_set.cv_resize(image, 0.3);
+
+    /***** set fixed pexel *****/
+    cv::Mat whiteimage = cv::imread(WORK_DIR "white.jpg");  
+    imageVector.push_back(image);
+    imageVector.push_back(whiteimage);
+    multipleImage(imageVector, image, 1, 750);
+    img_cv_set.cv_comment(image);
 
     /***** show images *****/
     if (writer.isOpened()) writer.write(image);
@@ -172,14 +179,13 @@ int32_t image_show::img_process (std::string Source_path)
 
 /***** multiple images are shown in one windows *****/
 /***** set parameters for the images *****/
-void image_show::multipleImage(std::vector<cv::Mat> imgVector, cv::Mat& dst, int imgCols) 
+void image_show::multipleImage(std::vector<cv::Mat> imgVector, cv::Mat& dst, int imgCols, int pixel)
 {
     /***** set max pixel for every images *****/
-    image_show img;
-    img.setMAX(600); // set values for MAX_PIXEL
-
+    const int MAX_PIXEL = pixel;
     int imgNum = imgVector.size();
-    /***** set the longest side and resize to 600 pixel *****/
+
+    /***** set the longest side and resize to fixed pixel *****/
     cv::Size imgOriSize = imgVector[0].size();
     int imgMaxPixel = std::max(imgOriSize.height, imgOriSize.width);
 
