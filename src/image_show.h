@@ -1,6 +1,6 @@
 /**
 *@file image_show.h
-*@brief image show and camera show classes
+*@brief includes image_show and camera_show functions
 *
 *MIT License
 *
