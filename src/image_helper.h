@@ -1,6 +1,6 @@
 /**
 *@file image_helper.h
-*@brief helper functions about each analyzing images steps
+*@brief functions for helping other files to analyze image poses
 *
 *MIT License
 *
@@ -40,6 +40,7 @@ class KeyInterface
 {
 public:
     virtual ~KeyInterface() {}
+    
 /**
  * @brief One is to check users' input to change the images.
  * When changing the image, first the camera will pause for a while. After changing the image, reopen the camera.
@@ -58,6 +59,64 @@ public:
  * @brief The image_helper class includes some helpful functions for showing the image window and camera window.
  * 
 */
+
+struct tips_settings 
+{
+/**
+ * @brief The tips_settings for all tips shown in the images for users.
+ * 
+*/
+    std::string image1_comment1 = " Warrior II ";
+    std::string image1_comment2 = " Tips: ";
+    std::string image1_comment3 = " 1: Stand with feet wide, 3-4 feet apart";
+    std::string image1_comment4 = " 2: Turn your left foot out 90 degrees";
+    std::string image1_comment5 = " 3: Bend your left knee to a 90 degree";
+    std::string image1_comment6 = " 4: Bring arms to a T at shoulder height";
+    std::string image1_comment7 = " 5: Draw your shoulder blades down the back";
+
+    std::string image2_comment1 = " Bound Ankle Pose ";
+    std::string image2_comment2 = " Tips: ";
+    std::string image2_comment3 = " 1: Sitting on the floor";
+    std::string image2_comment4 = " 2: bend knees and open them out";
+    std::string image2_comment5 = " 3: Bring your palms in front of your sternum";
+    //std::string image2_comment6 = "";
+    //std::string image2_comment7 = "";
+
+    std::string image3_comment1 = " Chaturanga ";
+    std::string image3_comment2 = " Tips: ";
+    std::string image3_comment3 = " 1: Gently tuck the taibone";
+    std::string image3_comment4 = " 2: Down pull the shoulders";
+    std::string image3_comment5 = " 3: Back the stomach is strong";
+    //std::string image3_comment6 = "";
+    //std::string image3_comment7 = "";
+
+    std::string image4_comment1 = " Body Stretches ";
+    std::string image4_comment2 = " Tips: ";
+    std::string image4_comment3 = " 1: Raise your arms";
+    std::string image4_comment4 = " 2: Spread your fingers";
+    std::string image4_comment5 = " 3: Reach up through your fingertips";
+    //std::string image4_comment6 = "";
+    //std::string image4_comment7 = "";
+
+    std::string image5_comment1 = " Plow Pose ";
+    std::string image5_comment2 = " Tips: ";
+    std::string image5_comment3 = " 1: Sit at the front end of your mat";
+    std::string image5_comment4 = " 2: Lie back over the blankets";
+    std::string image5_comment5 = " 3: Bring your knees toward your chest";
+    std::string image5_comment6 = " 4: Using the strength of your abs";
+    std::string image5_comment7 = " 5: Lower your legs backward over your head";
+
+    std::string image6_comment1 = " Upward-Facing Dog ";
+    std::string image6_comment2 = " Tips: ";
+    std::string image6_comment3 = " 1: Keep your feet on the mat";
+    std::string image6_comment4 = " 2: Point your toes";
+    std::string image6_comment5 = " 3: Press the tops of your feet down";
+    std::string image6_comment6 = " 4: Straighten as much as possible";
+    std::string image6_comment7 = " 5: Slowly lower down onto your stomach";
+
+};
+
+
 class image_helper
 {
 private:
@@ -66,12 +125,14 @@ private:
     double m_zoom;
     double fps;
     std::string fps_result;
+    tips_settings tips;
 
-
-public:   
+public:
+    
     image_helper() {}
     ~image_helper() {}
     static double zoomsize;
+
 /**
  * @brief The cv_FPS function refers to frame per second. This function calculates how many frames per second the system processes.
  * The FPS result will be shown on the left top side of the camera window.
@@ -91,9 +152,10 @@ public:
  * @brief The resize functions are overloaded to adjust the window size of the image window and camera window.
  * 
 */
-    void cv_resize(cv::Mat& mat); // overload function for webcam window
-    void cv_resize(cv::Mat& mat, double ratio); //overload function for fixed image window
+    void cv_resize(cv::Mat& mat); // overload for webcam window
+    void cv_resize(cv::Mat& mat, double ratio); //overload for fixed image window
     void cv_flip(cv::Mat& mat);
+    void cv_comment(cv::Mat& mat);
 
 };
 

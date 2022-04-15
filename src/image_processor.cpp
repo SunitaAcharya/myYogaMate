@@ -1,4 +1,12 @@
-/*** Include ***/
+/**
+*@file image_processor.cpp
+*@brief functions about each analysing images steps
+*
+*@copyright Copytight (C) 2022
+*
+*
+*/
+
 /* for general */
 #include <string>
 #include <vector>
@@ -9,16 +17,20 @@
 #include <memory>
 #include <unistd.h>
 #include <iostream>
+
 /* for OpenCV */
 #include <opencv2/opencv.hpp>
+
 /* for My modules */
 #include "pose_engine.h"
 #include "image_processor.h"
 #include "image_show.h"
 
+double angle_image[8]={0,0,0,0,0,0,0,0}; // angle check for image pose
 std::unique_ptr<PoseEngine> s_engine;
-int ImageProcessor_Process::angle_check[8];
+int ImageProcessor_Process::angle_check[8]; 
 
+/***** Initialize the processor *****/
 int32_t ImageProcessor_Initialize::Initialize(const ImageProcessor_Initialize::InputParam& input_param)
 {
 
@@ -37,7 +49,7 @@ int32_t ImageProcessor_Finalize::Finalize()
     if (!s_engine) 
     {
         
-        std::cout<<"Not initialized\n"<<std::endl;
+        std::cout<<"Not initialized\n"<<std::endl; // check if the processor initialize successfully
         return -1;
     }
 
@@ -92,7 +104,7 @@ static const std::vector<std::pair<int32_t, int32_t>> kJointLineList {
 
 static constexpr float kThresholdScoreKeyPoint = 0.2f;
 
-int32_t ImageProcessor_Process::Process(cv::Mat& mat)
+int32_t ImageProcessor_Process::Process(cv::Mat& mat) // details of analyzing the image pose processes
 {
     if (!s_engine)
     {
@@ -124,7 +136,7 @@ int32_t ImageProcessor_Process::Process(cv::Mat& mat)
             Learner[k][1]=keypoint[k+5].second;
         }
         
-        double* prt=new double[8];
+        double* prt=new double[8]; // define dynamic pointer
 
         for(int k =0; k<2; k++)
         {
@@ -142,6 +154,12 @@ int32_t ImageProcessor_Process::Process(cv::Mat& mat)
             Learner[k+4][1]=*(prt+k+4);
         }
         
+        /**
+         * Calculating the pose angles from images and users.
+         * Then compare these two angles to check if the user's pose is correct.
+         * If the user pose is correct, then the joint lines will show in green, else the joint lines will show in red.
+         * 
+        */ 
 
         for (int k = 0; k < 8; k++)
         {
@@ -161,8 +179,9 @@ int32_t ImageProcessor_Process::Process(cv::Mat& mat)
        
       
         for (int n = 0; n < 8; n++)
-        {                
-            if ((angle_camera[n]<(angle_image[n]-20)) || (angle_camera[n]>(angle_image[n]+20)))
+        {   
+            // the tolarant of the users' poses is plus and minus 20 degree
+            if ((angle_camera[n]<(angle_image[n]-18)) || (angle_camera[n]>(angle_image[n]+18)))
             {
                 angle_check[n]=n+1;
             }
@@ -217,8 +236,9 @@ int32_t ImageProcessor_Process::Process(cv::Mat& mat)
             
             
         }
-        delete []prt;
+        delete []prt; // delete the pointer to release the memory
     }
     
     return 0;
 }
+

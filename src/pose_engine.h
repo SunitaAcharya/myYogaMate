@@ -16,8 +16,8 @@ limitations under the License.
 #define POSE_ENGINE_
 
 /* for general */
-#include <cstdint>
-#include <cmath>
+//#include <cstdint>
+//#include <cmath>
 #include <string>
 #include <vector>
 #include <array>

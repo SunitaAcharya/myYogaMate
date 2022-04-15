@@ -14,10 +14,10 @@ limitations under the License.
 ==============================================================================*/
 /*** Include ***/
 /* for general */
-#include <cstdint>
-#include <cstdlib>
-#include <cmath>
-#include <cstring>
+// #include <cstdint>
+// #include <cstdlib>
+// #include <cmath>
+// #include <cstring>
 #include <string>
 #include <vector>
 #include <array>

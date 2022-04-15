@@ -1,6 +1,6 @@
 /**
 *@file image_show.cpp
-*@brief image show and camera show functions 
+*@brief implementation of functions from image_show and camera_show classes 
 *
 *MIT License
 *
@@ -38,10 +38,10 @@ int32_t camera_show::cam_process (std::string Webcam_id)
     cv::VideoCapture cap; 
 
     /***** create image_helper instance and check webcam id *****/
-    image_check check_source;  
+    image_check check_source; // create check_shorce object
     int check = check_source.source_check(m_input_name_cam,cap);
 
-    if(check == (-1)) // check if the image source read successfully
+    if(check == (-1)) // check if the camera source read successfully
     {
         return -1;
     }
@@ -121,7 +121,7 @@ int32_t image_show::img_process (std::string Source_path)
    
     /***** create image instance, check image format *****/
     cv::VideoCapture cap;
-    image_check source_check_img;
+    image_check source_check_img; // create check_shorce object
     int check = source_check_img.source_check(m_input_name_img,cap);
     if(check == (-1)) // check if the image source read successfully
     {
@@ -154,8 +154,15 @@ int32_t image_show::img_process (std::string Source_path)
 
     /***** set image cv parameters, resize and flip *****/
     image_helper img_cv_set;
+    image_helper white_cv_set;
     img_cv_set.cv_flip(image);
-    img_cv_set.cv_resize(image, 0.3);
+
+    /***** set fixed pexel *****/
+    cv::Mat whiteimage = cv::imread(WORK_DIR "white.jpg");  
+    imageVector.push_back(image);
+    imageVector.push_back(whiteimage);
+    multipleImage(imageVector, image, 1, 750);
+    img_cv_set.cv_comment(image);
 
     /***** show images *****/
     if (writer.isOpened()) writer.write(image);
@@ -172,14 +179,13 @@ int32_t image_show::img_process (std::string Source_path)
 
 /***** multiple images are shown in one windows *****/
 /***** set parameters for the images *****/
-void image_show::multipleImage(std::vector<cv::Mat> imgVector, cv::Mat& dst, int imgCols) 
+void image_show::multipleImage(std::vector<cv::Mat> imgVector, cv::Mat& dst, int imgCols, int pixel)
 {
     /***** set max pixel for every images *****/
-    image_show img;
-    img.setMAX(600); // set values for MAX_PIXEL
-
+    const int MAX_PIXEL = pixel;
     int imgNum = imgVector.size();
-    /***** set the longest side and resize to 600 pixel *****/
+
+    /***** set the longest side and resize to fixed pixel *****/
     cv::Size imgOriSize = imgVector[0].size();
     int imgMaxPixel = std::max(imgOriSize.height, imgOriSize.width);
 
@@ -234,7 +240,7 @@ void image_show::homepage()
     imageVector.push_back(image6);
 
     /***** set the window parameters*****/
-    multipleImage(imageVector, dst, 3);
+    multipleImage(imageVector, dst, 3, 600);
 
     /***** set image window *****/
     cv::namedWindow("My Yoga Mate");
