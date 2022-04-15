@@ -16,6 +16,7 @@
 #include <array>
 #include <iostream>
 
+
 namespace cv 
 {
     class Mat;
@@ -46,9 +47,8 @@ typedef struct InputParam // define new InputParam type struct with parameters w
 class ImageProcessor_Process
 {   
 private:
-    double angle_image[8]={0,0,0,0,0,0,0,0}; // angle check for image pose
-    double angle_camera[8]; // angle check for users' pose from camera
-    int Learner[12][2];
+double angle_camera[8]; // angle check for users' pose from camera
+int Learner[12][2];
 
 public:
     static int angle_check[8]; // comparing the angles of image pose and user's pose

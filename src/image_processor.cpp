@@ -26,6 +26,7 @@
 #include "image_processor.h"
 #include "image_show.h"
 
+double angle_image[8]={0,0,0,0,0,0,0,0}; // angle check for image pose
 std::unique_ptr<PoseEngine> s_engine;
 int ImageProcessor_Process::angle_check[8]; 
 
@@ -180,7 +181,7 @@ int32_t ImageProcessor_Process::Process(cv::Mat& mat) // details of analyzing th
         for (int n = 0; n < 8; n++)
         {   
             // the tolarant of the users' poses is plus and minus 20 degree
-            if ((angle_camera[n]<(angle_image[n]-20)) || (angle_camera[n]>(angle_image[n]+20)))
+            if ((angle_camera[n]<(angle_image[n]-18)) || (angle_camera[n]>(angle_image[n]+18)))
             {
                 angle_check[n]=n+1;
             }

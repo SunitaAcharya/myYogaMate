@@ -19,7 +19,7 @@
 
 #define DEFAULT_IMAGE_PATH_IMAGEHELPER            RESOURCE_DIR
 
-extern int BOOL[8];
+
 /***** static variables from image_helper class *****/
 std::string key::image_input_name = DEFAULT_IMAGE_PATH_IMAGEHELPER "yogapose1.jpg";
 double image_helper::zoomsize = 1.0;
@@ -169,6 +169,7 @@ void image_helper::pose_alert(cv::Mat& mat)
     while (arraysEqual && count < 8)
     {
         if (ImageProcessor_Process::angle_check[count] != posecorrect[count])
+        //if (angle_check[count] != posecorrect[count])
             arraysEqual = false;
         count++;
     }
