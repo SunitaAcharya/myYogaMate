@@ -105,8 +105,9 @@ Please visit <a href="https://github.com/SunitaAcharya/myYogaMate/blob/main/LICE
  Follow us on : 
 <table>
   <tr>
-    <td><a href="https://www.facebook.com/MYM-My-Yoga-Mate-111468058198753/"><img src="https://edent.github.io/SuperTinyIcons/images/svg/facebook.svg" width="45" </a></td>
-    <td><a href="https://www.instagram.com/myyogamate_/"><img src="https://edent.github.io/SuperTinyIcons/images/svg/instagram.svg" width="45" </a></td>
+    <td><a href="https://www.facebook.com/MYM-My-Yoga-Mate-111468058198753/"><img src="./image/facebook.svg" width="45" </a></td>
+    <td><a href="https://www.instagram.com/myyogamate_/"><img src="./image/instagram.svg" width="45" </a></td>
+     <td><a href="https://www.youtube.com/channel/UCH-tqGPOhMAgG3q3cRAu6AQ"><img src="./image/youtube.svg" width="45" </a></td>
     </tr>
     </table>
 
