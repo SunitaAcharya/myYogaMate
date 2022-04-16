@@ -15,10 +15,12 @@ BOOST_AUTO_TEST_SUITE(ImageShowTest)
 BOOST_AUTO_TEST_CASE(CorrectPathTest)
 {
   BOOST_CHECK_EQUAL(img_process_test.img_process(TEST_FILE_PATH "/test1.jpg"),0);
+    cv::destroyAllWindows();
 }
 BOOST_AUTO_TEST_CASE(IncorrectPathTest)
 {
   BOOST_CHECK_EQUAL(img_process_test.img_process(TEST_FILE_PATH "/New-demo-video.gif"),0);
+    cv::destroyAllWindows();
 }
 BOOST_AUTO_TEST_SUITE_END()
 
@@ -26,8 +28,7 @@ BOOST_AUTO_TEST_SUITE_END()
 BOOST_AUTO_TEST_SUITE(camera_showTest)
 BOOST_AUTO_TEST_CASE(Correctcam_id)
 {
-  BOOST_CHECK_EQUAL(cam_process_test.cam_process("0"),0);
-  cv::destroyAllWindows();
+  BOOST_CHECK_EQUAL(cam_process_test.cam_process("0"),-1); //Comparing them after stopping function (press "q" to quit and return -1)
 }
 BOOST_AUTO_TEST_SUITE_END()
 
