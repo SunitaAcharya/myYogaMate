@@ -90,6 +90,8 @@ make    #to compile program
 image_show() function is used to read and analyse the image choosen from menu. Also, it calculates the angles.
 camera_show() function is used to analyse the pose from webcam. It then calculates the angles which will used while comparing the angles of both the images and camera in realtime.
 
+All relevant information regarding this project is in <a href="https://github.com/SunitaAcharya/myYogaMate/wiki">Wiki</a>
+
 ### License
 Copyright 2022 UofG_rtep_team4<br/>
 Licensed under the MIT License<br/>
