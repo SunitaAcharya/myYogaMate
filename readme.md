@@ -80,7 +80,7 @@ make    #to compile program
 ### Code Structure
 * image_helper.cpp: It includes all the functions that can help the image_processor and image_show to implement their functions. For example, checking the image type, detecting the key presssed by users, resizing output windows, and showing remainder statement.
 * image_processor.cpp: Image processor can compare the pose of user with image. It includes the functions of initialisation, angle calculation and comparison, and drawing of joint points and lines.
-* image_show.cpp: It focuses on showing the homepage, image window, and camera window at the same time.
+* image_show.cpp: It focuses on showing the homepage, image window, and camera window in real time.
 * pose_engine.cpp: It sets model information and input parameters for Tensor flow and reture the result from Tensor flow.
 
 <p align="center">
